@@ -1,0 +1,24 @@
+// services/index.js — Central exporter for all API service files
+export { patientService } from './patientService';
+export { appointmentService } from './appointmentService';
+export { doctorService } from './doctorService';
+export { laboratoryService as labService } from './laboratoryService';
+export { pharmacyService } from './pharmacyService';
+export { billingService } from './billingService';
+export { default as ipdService } from './ipdService';
+export { default as emergencyService } from './emergencyService';
+export { default as nursingService } from './nursingService';
+export { default as radiologyService } from './radiologyService';
+export { default as surgeryService } from './surgeryService';
+export { default as bloodBankService } from './bloodBankService';
+export { default as dischargeService } from './dischargeService';
+export { default as followupService } from './followupService';
+export { default as complaintService } from './complaintService';
+export { default as traceabilityService } from './traceabilityService';
+export { default as reportService } from './reportService';
+export { default as auditService } from './auditService';
+export { default as notificationService } from './notificationService';
+export { default as departmentService } from './departmentService';
+export { default as staffService } from './staffService';
+export { default as dashboardService } from './dashboardService';
+export { authService } from './authService';

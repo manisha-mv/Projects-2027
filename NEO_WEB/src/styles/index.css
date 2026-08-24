@@ -1,0 +1,19 @@
+/* ============================================================
+   NEO-HMS — Global CSS Entry Point
+   ============================================================ */
+
+@import './variables.css';
+@import './reset.css';
+@import './typography.css';
+@import './components.css';
+@import './layout.css';
+@import './features.css';
+
+/* ── Global App Styles ─────────────────────────────────── */
+#root {
+  height: 100%;
+}
+
+html, body {
+  height: 100%;
+}
