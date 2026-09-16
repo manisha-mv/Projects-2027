@@ -236,7 +236,7 @@ export default function StaffList() {
       {/* KPI Strip */}
       <div className="patient-stats-strip">
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6EEF9', color: '#0F52BA' }}>
+          <div className="stat-pill-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>
             <RiTeamLine size={20} />
           </div>
           <div>
@@ -246,22 +246,22 @@ export default function StaffList() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#D1FAE5', color: '#059669' }}>
+          <div className="stat-pill-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>
             <RiCheckboxCircleLine size={20} />
           </div>
           <div>
             <div className="stat-pill-label">Currently Active</div>
-            <div className="stat-pill-value" style={{ color: '#059669' }}>{activeCount}</div>
+            <div className="stat-pill-value" style={{ color: '#16A34A' }}>{activeCount}</div>
           </div>
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
+          <div className="stat-pill-icon" style={{ background: '#FEF9C3', color: '#F59E0B' }}>
             <RiTimeLine size={20} />
           </div>
           <div>
             <div className="stat-pill-label">On Leave</div>
-            <div className="stat-pill-value" style={{ color: '#D97706' }}>{onLeaveCount}</div>
+            <div className="stat-pill-value" style={{ color: '#F59E0B' }}>{onLeaveCount}</div>
           </div>
         </div>
 

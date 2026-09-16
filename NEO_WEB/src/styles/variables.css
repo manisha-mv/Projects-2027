@@ -3,63 +3,79 @@
    ============================================================ */
 
 :root {
-  /* ─── Brand Colors ───────────────────────────────────── */
-  --color-primary:        #0F52BA; /* Deep Sapphire Blue */
-  --color-primary-dark:   #0B3D8C;
-  --color-primary-darker: #072960;
-  --color-primary-light:  #E6EEF9;
-  --color-primary-muted:  #CDDEF0;
+  /* ─── Brand Colors (NEO Care Hospital Logo Palette) ────── */
+  --color-brand-purple:     #5B21B6; /* Royal Logo Purple */
+  --color-brand-purple-dark:#4C1D95;
+  --color-brand-purple-light:#F3E8FF;
+  --color-brand-purple-glow: rgba(91, 33, 182, 0.15);
 
-  --color-secondary:        #0B9488; /* Calm Teal */
-  --color-secondary-dark:   #09736A;
-  --color-secondary-light:  #E6F4F3;
+  --color-brand-teal:       #0D9488; /* Emerald Teal */
+  --color-brand-teal-dark:  #0F766E;
+  --color-brand-teal-light: #CCFBF1;
+  --color-brand-teal-glow:  rgba(13, 148, 136, 0.15);
+
+  --color-brand-coral:      #F87171; /* Accent Coral Pixel */
+  --color-brand-coral-light:#FEE2E2;
+
+  --color-primary:        #5B21B6; /* Primary set to NEO Logo Purple */
+  --color-primary-dark:   #4C1D95;
+  --color-primary-darker: #3730A3;
+  --color-primary-light:  #F3E8FF;
+  --color-primary-muted:  #DDD6FE;
+
+  --color-secondary:        #0D9488; /* Secondary set to NEO Logo Teal */
+  --color-secondary-dark:   #0F766E;
+  --color-secondary-light:  #CCFBF1;
+
+  --color-accent:           #06B6D4; /* NEO Cyan Accent */
+  --color-accent-light:     #CFFAFE;
 
   /* ─── Semantic / State Colors ────────────────────────── */
-  --color-success:        #059669;
-  --color-success-light:  #D1FAE5;
-  --color-success-dark:   #047857;
+  --color-success:        #16A34A;
+  --color-success-light:  #DCFCE7;
+  --color-success-dark:   #15803D;
 
-  --color-warning:        #D97706;
-  --color-warning-light:  #FEF3C7;
-  --color-warning-dark:   #B45309;
+  --color-warning:        #F59E0B;
+  --color-warning-light:  #FEF9C3;
+  --color-warning-dark:   #D97706;
 
   --color-error:          #DC2626;
   --color-error-light:    #FEE2E2;
   --color-error-dark:     #B91C1C;
 
-  --color-info:           #2563EB;
-  --color-info-light:     #DBEAFE;
-  --color-info-dark:      #1D4ED8;
+  --color-info:           #0284C7;
+  --color-info-light:     #E0F2FE;
+  --color-info-dark:      #0369A1;
 
-  --color-emergency:      #B91C1C;
+  --color-emergency:      #DC2626;
   --color-emergency-light:#FEE2E2;
-  --color-critical:       #7C3AED;
-  --color-critical-light: #EDE9FE;
+  --color-critical:       #DC2626;
+  --color-critical-light: #FEE2E2;
 
   /* ─── Neutral / UI Colors ────────────────────────────── */
-  --color-bg:             #F1F5F9; /* Slate 50 */
+  --color-bg:             #F8FAFC;
   --color-surface:        #FFFFFF;
-  --color-surface-alt:    #F8FAFC;
+  --color-surface-alt:    #F1F5F9;
 
-  --color-text-primary:   #0F172A; /* Slate 900 */
-  --color-text-secondary: #475569; /* Slate 600 */
-  --color-text-muted:     #94A3B8; /* Slate 400 */
+  --color-text-primary:   #1E293B;
+  --color-text-secondary: #64748B;
+  --color-text-muted:     #94A3B8;
   --color-text-inverse:   #FFFFFF;
-  --color-text-link:      #0F52BA;
+  --color-text-link:      #2563EB;
 
-  --color-border:         #E2E8F0; /* Slate 200 */
-  --color-border-strong:  #CBD5E1; /* Slate 300 */
-  --color-border-focus:   #0F52BA;
+  --color-border:         #E2E8F0;
+  --color-border-strong:  #CBD5E1;
+  --color-border-focus:   #2563EB;
 
   /* ─── Sidebar ─────────────────────────────────────────── */
-  --sidebar-bg:           #0F1C2E; /* Deep Navy */
-  --sidebar-surface:      #0A1628; /* Deeper Navy */
-  --sidebar-text:         #8FA8C8; /* Muted Blue-Grey */
+  --sidebar-bg:           #0F172A;
+  --sidebar-surface:      #0B1120;
+  --sidebar-text:         #94A3B8;
   --sidebar-text-active:  #FFFFFF;
-  --sidebar-active-bg:    rgba(15, 82, 186, 0.85);
+  --sidebar-active-bg:    rgba(37, 99, 235, 0.85);
   --sidebar-active-border:#60A5FA;
   --sidebar-hover-bg:     rgba(255,255,255,0.06);
-  --sidebar-icon:         #5A7A9C;
+  --sidebar-icon:         #64748B;
   --sidebar-icon-active:  #FFFFFF;
   --sidebar-width:        240px;
   --sidebar-width-collapsed: 58px;
@@ -68,8 +84,8 @@
   /* ─── Topbar ─────────────────────────────────────────── */
   --topbar-height:        56px;
   --topbar-bg:            #FFFFFF;
-  --topbar-border:        #E4E7EC;
-  --topbar-shadow:        0 1px 0 #E4E7EC, 0 2px 8px rgba(15,23,42,0.04);
+  --topbar-border:        #E2E8F0;
+  --topbar-shadow:        0 1px 0 #E2E8F0, 0 2px 8px rgba(15,23,42,0.04);
 
   /* ─── Spacing ────────────────────────────────────────── */
   --space-1:  4px;
@@ -122,7 +138,7 @@
   --shadow-xl:    0 20px 25px -5px rgba(15, 23, 42, 0.09), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
   --shadow-card:  0 2px 8px -2px rgba(15, 23, 42, 0.05), 0 0 1px rgba(15, 23, 42, 0.08);
   --shadow-card-hover: 0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-  --shadow-focus: 0 0 0 3px rgba(15, 82, 186, 0.2);
+  --shadow-focus: 0 0 0 3px rgba(37, 99, 235, 0.2);
   --backdrop-blur: blur(8px);
 
   /* ─── Transitions ─────────────────────────────────────── */

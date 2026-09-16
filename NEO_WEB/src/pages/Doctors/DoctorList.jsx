@@ -211,7 +211,7 @@ export default function DoctorList() {
       {/* KPI Stats Strip */}
       <div className="module-stats-strip">
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6EEF9', color: '#0F52BA' }}>
+          <div className="stat-pill-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>
             <RiStethoscopeLine size={20} />
           </div>
           <div>
@@ -221,7 +221,7 @@ export default function DoctorList() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#D1FAE5', color: '#059669' }}>
+          <div className="stat-pill-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>
             <RiStethoscopeLine size={20} />
           </div>
           <div>
@@ -231,7 +231,7 @@ export default function DoctorList() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6F4F3', color: '#0B9488' }}>
+          <div className="stat-pill-icon" style={{ background: '#CCFBF1', color: '#0F766E' }}>
             <RiStethoscopeLine size={20} />
           </div>
           <div>
@@ -241,7 +241,7 @@ export default function DoctorList() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
+          <div className="stat-pill-icon" style={{ background: '#FEF9C3', color: '#F59E0B' }}>
             <RiStethoscopeLine size={20} />
           </div>
           <div>

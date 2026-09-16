@@ -139,12 +139,12 @@ export default function BloodBankDashboard() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
+          <div className="stat-pill-icon" style={{ background: '#FEF9C3', color: '#F59E0B' }}>
             <RiAlertLine size={20} />
           </div>
           <div>
             <div className="stat-pill-label">Pending Requisitions</div>
-            <div className="stat-pill-value" style={{ color: '#D97706' }}>{pendingReqs.length} Orders</div>
+            <div className="stat-pill-value" style={{ color: '#F59E0B' }}>{pendingReqs.length} Orders</div>
           </div>
         </div>
 
@@ -159,7 +159,7 @@ export default function BloodBankDashboard() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6EEF9', color: '#0F52BA' }}>
+          <div className="stat-pill-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>
             <RiFlaskLine size={20} />
           </div>
           <div>

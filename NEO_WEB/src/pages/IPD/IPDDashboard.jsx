@@ -211,7 +211,7 @@ export default function IPDDashboard() {
       {/* KPI Stats Strip */}
       <div className="module-stats-strip">
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6EEF9', color: '#0F52BA' }}>
+          <div className="stat-pill-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>
             <RiHotelBedLine size={20} />
           </div>
           <div>
@@ -221,7 +221,7 @@ export default function IPDDashboard() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#D1FAE5', color: '#059669' }}>
+          <div className="stat-pill-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>
             <RiHotelBedLine size={20} />
           </div>
           <div>
@@ -231,7 +231,7 @@ export default function IPDDashboard() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
+          <div className="stat-pill-icon" style={{ background: '#FEF9C3', color: '#F59E0B' }}>
             <RiHotelBedLine size={20} />
           </div>
           <div>
@@ -241,7 +241,7 @@ export default function IPDDashboard() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6F4F3', color: '#0B9488' }}>
+          <div className="stat-pill-icon" style={{ background: '#CCFBF1', color: '#0F766E' }}>
             <RiHotelBedLine size={20} />
           </div>
           <div>

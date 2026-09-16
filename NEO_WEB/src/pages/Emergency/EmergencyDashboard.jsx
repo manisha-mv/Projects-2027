@@ -36,8 +36,8 @@ export default function EmergencyDashboard() {
     setLoading(true);
     setError(null);
     try {
-      const res = await emergencyService.getCases({ search, triage: triageFilter, status: statusFilter });
-      setPatients(res.cases || []);
+      const res = await emergencyService.getCases({ search, triage: triageFilter, status: statusFilter, limit: 100 });
+      setPatients(res.cases || res.patients || []);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -81,8 +81,11 @@ export default function EmergencyDashboard() {
     }
   };
 
-  const criticalCount = patients.filter(p => p.triage?.includes('P1')).length;
-  const urgentCount = patients.filter(p => p.triage?.includes('P2')).length;
+  const criticalCount  = patients.filter(p => p.triage?.includes('P1')).length;
+  const urgentCount    = patients.filter(p => p.triage?.includes('P2')).length;
+  const activeCount    = patients.filter(p => ['Registered','Triaged','Under Treatment'].includes(p.status)).length;
+  const admittedCount  = patients.filter(p => p.status === 'Admitted').length;
+  const dischargedCount= patients.filter(p => p.status === 'Discharged').length;
 
   const tableColumns = [
     {
@@ -183,13 +186,13 @@ export default function EmergencyDashboard() {
           </div>
           <div>
             <div className="stat-pill-label">P1 Critical Cases</div>
-            <div className="stat-pill-value">{criticalCount}</div>
+            <div className="stat-pill-value" style={{ color: '#991B1B' }}>{criticalCount}</div>
           </div>
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
-            <RiFirstAidKitLine size={20} />
+          <div className="stat-pill-icon" style={{ background: '#FEF9C3', color: '#F59E0B' }}>
+            <RiAlertLine size={20} />
           </div>
           <div>
             <div className="stat-pill-label">P2 Urgent Cases</div>
@@ -198,11 +201,41 @@ export default function EmergencyDashboard() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6EEF9', color: '#0F52BA' }}>
+          <div className="stat-pill-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
             <RiFirstAidKitLine size={20} />
           </div>
           <div>
-            <div className="stat-pill-label">Total Active Cases</div>
+            <div className="stat-pill-label">Active / Under Tx</div>
+            <div className="stat-pill-value">{activeCount}</div>
+          </div>
+        </div>
+
+        <div className="stat-pill-card">
+          <div className="stat-pill-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>
+            <RiFirstAidKitLine size={20} />
+          </div>
+          <div>
+            <div className="stat-pill-label">Admitted to Ward</div>
+            <div className="stat-pill-value">{admittedCount}</div>
+          </div>
+        </div>
+
+        <div className="stat-pill-card">
+          <div className="stat-pill-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>
+            <RiFirstAidKitLine size={20} />
+          </div>
+          <div>
+            <div className="stat-pill-label">Discharged Today</div>
+            <div className="stat-pill-value">{dischargedCount}</div>
+          </div>
+        </div>
+
+        <div className="stat-pill-card">
+          <div className="stat-pill-icon" style={{ background: '#F3E8FF', color: '#7C3AED' }}>
+            <RiFirstAidKitLine size={20} />
+          </div>
+          <div>
+            <div className="stat-pill-label">Total ER Cases</div>
             <div className="stat-pill-value">{patients.length}</div>
           </div>
         </div>

@@ -129,7 +129,7 @@ export default function PharmacyInventory() {
       {/* KPI Stats Strip (Matching Patients Page Screenshot 1) */}
       <div className="patient-stats-strip">
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6EEF9', color: '#0F52BA' }}>
+          <div className="stat-pill-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>
             <RiArchiveLine size={20} />
           </div>
           <div>
@@ -139,22 +139,22 @@ export default function PharmacyInventory() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#D1FAE5', color: '#059669' }}>
+          <div className="stat-pill-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>
             <RiCheckDoubleLine size={20} />
           </div>
           <div>
             <div className="stat-pill-label">Healthy Stock Items</div>
-            <div className="stat-pill-value" style={{ color: '#059669' }}>{inStockCount}</div>
+            <div className="stat-pill-value" style={{ color: '#16A34A' }}>{inStockCount}</div>
           </div>
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
+          <div className="stat-pill-icon" style={{ background: '#FEF9C3', color: '#F59E0B' }}>
             <RiAlertLine size={20} />
           </div>
           <div>
             <div className="stat-pill-label">Low Stock Alerts</div>
-            <div className="stat-pill-value" style={{ color: '#D97706' }}>{lowStockCount}</div>
+            <div className="stat-pill-value" style={{ color: '#F59E0B' }}>{lowStockCount}</div>
           </div>
         </div>
 

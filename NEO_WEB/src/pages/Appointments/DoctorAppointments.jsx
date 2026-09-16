@@ -96,10 +96,10 @@ const DoctorAppointments = () => {
   );
 
   const stats = [
-    { label: 'Total Today',    value: todayApts.length, bg: '#EFF6FF', color: '#1D4ED8' },
-    { label: 'Waiting',        value: waiting.length,   bg: '#FEF3C7', color: '#D97706' },
-    { label: 'In Progress',    value: inProgress.length,bg: '#EDE9FE', color: '#7C3AED' },
-    { label: 'Completed',      value: completed.length, bg: '#D1FAE5', color: '#059669' },
+    { label: 'Total Today',    value: todayApts.length, bg: '#DBEAFE', color: '#1D4ED8' },
+    { label: 'Waiting',        value: waiting.length,   bg: '#FEF9C3', color: '#F59E0B' },
+    { label: 'In Progress',    value: inProgress.length,bg: '#E0F2FE', color: '#0284C7' },
+    { label: 'Completed',      value: completed.length, bg: '#DCFCE7', color: '#16A34A' },
   ];
 
   return (
@@ -139,7 +139,7 @@ const DoctorAppointments = () => {
           {/* Waiting / Checked In */}
           {waiting.length > 0 && (
             <div className="doctor-apt-section">
-              <SectionHeader title="⏳ Waiting / Checked In" count={waiting.length} color="#D97706" />
+              <SectionHeader title="⏳ Waiting / Checked In" count={waiting.length} color="#F59E0B" />
               {waiting.map(a => <AptCard key={a.id} apt={a} />)}
             </div>
           )}
@@ -147,7 +147,7 @@ const DoctorAppointments = () => {
           {/* In Consultation */}
           {inProgress.length > 0 && (
             <div className="doctor-apt-section">
-              <SectionHeader title="🩺 In Consultation" count={inProgress.length} color="#7C3AED" />
+              <SectionHeader title="🩺 In Consultation" count={inProgress.length} color="#0284C7" />
               {inProgress.map(a => <AptCard key={a.id} apt={a} />)}
             </div>
           )}
@@ -163,7 +163,7 @@ const DoctorAppointments = () => {
           {/* Completed */}
           {completed.length > 0 && (
             <div className="doctor-apt-section">
-              <SectionHeader title="✅ Completed" count={completed.length} color="#059669" />
+              <SectionHeader title="✅ Completed" count={completed.length} color="#16A34A" />
               {completed.map(a => <AptCard key={a.id} apt={a} />)}
             </div>
           )}

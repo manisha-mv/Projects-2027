@@ -61,7 +61,7 @@ export default function ClaimDetailModal({ isOpen, onClose, claim, onUpdateStatu
     >
       <div className="modal-body-content">
         {/* Patient Header Summary Card (Patients Section Standard) */}
-        <div className="patient-banner-card" style={{ marginBottom: '16px', background: 'linear-gradient(135deg, #0F1C2E 0%, #1E293B 100%)', padding: '18px' }}>
+        <div className="patient-banner-card" style={{ marginBottom: '16px', background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)', padding: '18px' }}>
           <div className="patient-banner-main">
             <Avatar name={patientName} size="md" />
             <div>
@@ -149,7 +149,7 @@ export default function ClaimDetailModal({ isOpen, onClose, claim, onUpdateStatu
                 ₹{claim.claimAmount?.toLocaleString('en-IN')}
               </div>
             </div>
-            <div style={{ background: '#E6F4F3', padding: '12px', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ background: '#CCFBF1', padding: '12px', borderRadius: 'var(--radius-md)' }}>
               <div style={{ fontSize: '11px', color: 'var(--color-secondary-dark)' }}>Approved Amount</div>
               <div style={{ fontSize: '18px', fontWeight: 800, color: 'var(--color-success)' }}>
                 {claim.approvedAmount ? `₹${claim.approvedAmount?.toLocaleString('en-IN')}` : 'Pending'}

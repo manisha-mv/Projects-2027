@@ -64,7 +64,7 @@ export default function MedicineDetailModal({ isOpen, onClose, medicine, onUpdat
     >
       <div className="modal-body-content">
         {/* Header Summary Banner (Matching Patients Section Standard) */}
-        <div className="patient-banner-card" style={{ marginBottom: '16px', background: 'linear-gradient(135deg, #0F1C2E 0%, #1E293B 100%)', padding: '18px' }}>
+        <div className="patient-banner-card" style={{ marginBottom: '16px', background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)', padding: '18px' }}>
           <div className="patient-banner-main">
             <div style={{
               width: '48px',
@@ -100,7 +100,7 @@ export default function MedicineDetailModal({ isOpen, onClose, medicine, onUpdat
         <div style={{ background: 'var(--color-surface-alt)', padding: '16px', borderRadius: 'var(--radius-lg)', marginBottom: '16px', border: '1px solid var(--color-border)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
             <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text-muted)' }}>CURRENT INVENTORY STOCK LEVEL</span>
-            <strong style={{ fontSize: '16px', color: isExpired ? '#DC2626' : isLow ? '#D97706' : 'var(--color-success)' }}>
+            <strong style={{ fontSize: '16px', color: isExpired ? '#DC2626' : isLow ? '#F59E0B' : 'var(--color-success)' }}>
               {medicine.quantity} {medicine.unit} (Min Reorder: {medicine.minStock})
             </strong>
           </div>
@@ -113,7 +113,7 @@ export default function MedicineDetailModal({ isOpen, onClose, medicine, onUpdat
           </div>
 
           {isLow && (
-            <div style={{ marginTop: '10px', fontSize: '12px', color: '#D97706', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ marginTop: '10px', fontSize: '12px', color: '#F59E0B', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <RiAlertLine /> Stock is below minimum threshold level ({medicine.minStock} {medicine.unit}). Reorder required.
             </div>
           )}
@@ -187,7 +187,7 @@ export default function MedicineDetailModal({ isOpen, onClose, medicine, onUpdat
           </div>
 
           {stockAddQty !== 0 && (
-            <div style={{ marginTop: '12px', fontSize: '13px', background: '#EFF6FF', padding: '10px 14px', borderRadius: '6px', color: '#1D4ED8', fontWeight: 500 }}>
+            <div style={{ marginTop: '12px', fontSize: '13px', background: '#DBEAFE', padding: '10px 14px', borderRadius: '6px', color: '#1D4ED8', fontWeight: 500 }}>
               Updated stock after saving: <strong>{parseInt(medicine.quantity, 10) + parseInt(stockAddQty || 0, 10)} {medicine.unit}</strong>
             </div>
           )}

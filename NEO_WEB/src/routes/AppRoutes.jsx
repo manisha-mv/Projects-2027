@@ -35,6 +35,7 @@ import StaffList from '../pages/Staff/StaffList';
 import ReportsDashboard from '../pages/Reports/ReportsDashboard';
 import NotificationsPage from '../pages/Notifications/NotificationsPage';
 import SettingsPage from '../pages/Settings/SettingsPage';
+import PatientPortal from '../pages/PatientPortal/PatientPortal';
 
 const AppRoutes = () => (
   <Routes>
@@ -53,6 +54,7 @@ const AppRoutes = () => (
     >
       <Route index element={<Navigate to="/dashboard" replace />} />
       <Route path="dashboard" element={<Dashboard />} />
+      <Route path="patient-portal" element={<PatientPortal />} />
 
       {/* Patients */}
       <Route
@@ -76,7 +78,7 @@ const AppRoutes = () => (
       <Route
         path="appointments"
         element={
-          <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'RECEPTIONIST', 'NURSE']}>
+          <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'RECEPTIONIST', 'NURSE', 'PATIENT']}>
             <AppointmentList />
           </ProtectedRoute>
         }
@@ -110,7 +112,7 @@ const AppRoutes = () => (
       <Route
         path="laboratory"
         element={
-          <ProtectedRoute allowedRoles={['ADMIN', 'LAB', 'DOCTOR']}>
+          <ProtectedRoute allowedRoles={['ADMIN', 'LAB', 'DOCTOR', 'PATIENT']}>
             <LabDashboard />
           </ProtectedRoute>
         }
@@ -176,7 +178,7 @@ const AppRoutes = () => (
       <Route
         path="billing"
         element={
-          <ProtectedRoute allowedRoles={['ADMIN', 'BILLING', 'RECEPTIONIST']}>
+          <ProtectedRoute allowedRoles={['ADMIN', 'BILLING', 'RECEPTIONIST', 'PATIENT']}>
             <BillingDashboard />
           </ProtectedRoute>
         }
@@ -208,7 +210,7 @@ const AppRoutes = () => (
       <Route
         path="medical-records"
         element={
-          <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'NURSE', 'RECEPTIONIST']}>
+          <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'NURSE', 'RECEPTIONIST', 'PATIENT']}>
             <MedicalRecords />
           </ProtectedRoute>
         }
@@ -218,7 +220,7 @@ const AppRoutes = () => (
       <Route
         path="traceability"
         element={
-          <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'NURSE', 'RECEPTIONIST', 'LAB', 'RADIOLOGY', 'PHARMACIST', 'BILLING']}>
+          <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'NURSE', 'RECEPTIONIST', 'LAB', 'RADIOLOGY', 'PHARMACIST', 'BILLING', 'PATIENT']}>
             <TreatmentTrace />
           </ProtectedRoute>
         }
@@ -252,7 +254,7 @@ const AppRoutes = () => (
       <Route
         path="complaints"
         element={
-          <ProtectedRoute allowedRoles={['ADMIN', 'COMPLAINT_OFFICER']}>
+          <ProtectedRoute allowedRoles={['ADMIN', 'COMPLAINT_OFFICER', 'PATIENT']}>
             <ComplaintDashboard />
           </ProtectedRoute>
         }

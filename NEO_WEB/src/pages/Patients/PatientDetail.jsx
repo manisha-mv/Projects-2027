@@ -349,7 +349,7 @@ const PatientDetail = () => {
                     <div style={{ fontSize: '0.85rem', color: '#991B1B', marginBottom: '8px' }}>
                       Relationship: <strong>{patient.emergencyContact.relation || 'Relative'}</strong>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.95rem', fontWeight: 600, color: '#B91C1C' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.95rem', fontWeight: 600, color: '#DC2626' }}>
                       <RiPhoneLine /> {patient.emergencyContact.phone}
                     </div>
                   </div>

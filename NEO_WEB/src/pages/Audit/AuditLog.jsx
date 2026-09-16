@@ -214,7 +214,7 @@ export default function AuditLog() {
       {/* KPI Strip */}
       <div className="patient-stats-strip">
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6EEF9', color: '#0F52BA' }}>
+          <div className="stat-pill-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>
             <RiFileListLine size={20} />
           </div>
           <div>
@@ -224,12 +224,12 @@ export default function AuditLog() {
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#D1FAE5', color: '#059669' }}>
+          <div className="stat-pill-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>
             <RiCheckboxCircleLine size={20} />
           </div>
           <div>
             <div className="stat-pill-label">Successful Actions</div>
-            <div className="stat-pill-value" style={{ color: '#059669' }}>{successCount}</div>
+            <div className="stat-pill-value" style={{ color: '#16A34A' }}>{successCount}</div>
           </div>
         </div>
 

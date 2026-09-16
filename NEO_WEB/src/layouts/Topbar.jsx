@@ -10,6 +10,7 @@ import {
 import GlobalSearch from '../components/common/GlobalSearch';
 import NotificationPanel from '../components/common/NotificationPanel';
 import UserProfileMenu from '../components/common/UserProfileMenu';
+import { NeoLogoMark } from '../components/common/NeoLogo';
 import { mockShiftInfo } from '../data/mockData';
 
 const Topbar = ({ onMobileMenuOpen }) => {
@@ -32,9 +33,9 @@ const Topbar = ({ onMobileMenuOpen }) => {
         </button>
 
         {/* Mobile brand (hidden on desktop - sidebar shows it) */}
-        <div className="topbar-brand-mobile">
-          <RiHeartPulseLine size={16} color="var(--color-primary)" />
-          <span className="topbar-brand-name">NEO-HMS</span>
+        <div className="topbar-brand-mobile" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <NeoLogoMark size={22} />
+          <span className="topbar-brand-name">NEO Care</span>
         </div>
       </div>
 

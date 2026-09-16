@@ -21,6 +21,7 @@ import Avatar from '../../components/ui/Avatar';
 import Toast from '../../components/ui/Toast';
 import Modal from '../../components/ui/Modal';
 import Spinner from '../../components/ui/Spinner';
+import { useAuth } from '../../contexts/AuthContext';
 import billingService, { INVOICE_STATUSES, PAYMENT_METHODS } from '../../services/billingService';
 import InvoiceDetailModal from '../../components/billing/InvoiceDetailModal';
 import CreateInvoiceModal from '../../components/billing/CreateInvoiceModal';
@@ -44,6 +45,10 @@ const getStatusBadgeVariant = (status) => {
 };
 
 const BillingDashboard = () => {
+  const { user, role } = useAuth();
+  const isPatient = role === 'PATIENT' || !!user?.patientId;
+  const loggedInPatientId = user?.patientId || user?.id || 'P10025';
+
   // Filter & Pagination State
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('All');
@@ -71,24 +76,46 @@ const BillingDashboard = () => {
     setLoading(true);
     try {
       const statusParam = selectedStatus === 'All' ? '' : selectedStatus;
-      const res = await billingService.getInvoices({
+      const params = {
         search: searchQuery,
         status: statusParam,
         page: currentPage,
         limit: pageSize,
-      });
+      };
+
+      if (isPatient) {
+        params.patientId = loggedInPatientId;
+        params.patientName = user?.name || '';
+      }
+
+      const res = await billingService.getInvoices(params);
 
       setInvoices(res.invoices || []);
       setTotalRecords(res.total || 0);
       setTotalPages(Math.max(1, Math.ceil((res.total || 0) / pageSize)));
-      setStats(billingService.getDashboardStats());
+
+      if (isPatient) {
+        const pInvoices = res.invoices || [];
+        const tot = pInvoices.reduce((s, i) => s + (i.total || 0), 0);
+        const pd = pInvoices.reduce((s, i) => s + (i.paid || 0), 0);
+        const bal = pInvoices.reduce((s, i) => s + (i.balance || 0), 0);
+        setStats({
+          totalRevenue: tot,
+          pendingAmount: bal,
+          totalInvoices: pInvoices.length,
+          paidInvoices: pInvoices.filter(i => i.status === 'Paid').length,
+          paidAmount: pd
+        });
+      } else {
+        setStats(billingService.getDashboardStats());
+      }
     } catch (err) {
       console.error('Failed to load billing invoices', err);
       setToast({ type: 'error', message: 'Failed to fetch billing invoices.' });
     } finally {
       setLoading(false);
     }
-  }, [searchQuery, selectedStatus, currentPage]);
+  }, [searchQuery, selectedStatus, currentPage, isPatient, loggedInPatientId, user?.name]);
 
   useEffect(() => {
     loadInvoices();
@@ -272,51 +299,80 @@ const BillingDashboard = () => {
   return (
     <div className="page-container">
       <PageHeader
-        title="Billing & Financial Management"
-        description="Streamlined patient billing, automated invoice tracking, receipts, and revenue collection."
+        title={isPatient ? "My Invoices & Financial Statements" : "Billing & Financial Management"}
+        description={isPatient ? "Personal hospital invoices, breakdown of charges, insurance coverage, and download receipts." : "Streamlined patient billing, automated invoice tracking, receipts, and revenue collection."}
         primaryAction={
           <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
             <Button variant="outline" size="md" onClick={handleExportCSV}>
               <RiDownloadLine size={18} />
               Export
             </Button>
-            <Button variant="primary" size="md" onClick={() => setIsCreateModalOpen(true)}>
-              <RiFileAddLine size={18} />
-              Create New Invoice
-            </Button>
+            {!isPatient && (
+              <Button variant="primary" size="md" onClick={() => setIsCreateModalOpen(true)}>
+                <RiFileAddLine size={18} />
+                Create New Invoice
+              </Button>
+            )}
           </div>
         }
       />
 
+      {isPatient && (
+        <div style={{
+          padding: '16px 20px',
+          background: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
+          borderRadius: '12px',
+          border: '1px solid #DDD6FE',
+          marginBottom: '20px',
+          display: 'flex',
+          justify: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '12px'
+        }}>
+          <div>
+            <div style={{ fontSize: '15px', fontWeight: '800', color: '#5B21B6' }}>
+              📄 Patient Billing Record: {user?.name || 'Logged-In Patient'}
+            </div>
+            <div style={{ fontSize: '13px', color: '#4C1D95', marginTop: '2px' }}>
+              Patient ID: <strong>{loggedInPatientId}</strong> • Displaying invoice details strictly for logged-in patient. No other patient records are included.
+            </div>
+          </div>
+          <span style={{ padding: '6px 14px', background: '#7C3AED', color: '#FFF', borderRadius: '20px', fontSize: '12px', fontWeight: '700' }}>
+            Patient Invoices Only
+          </span>
+        </div>
+      )}
+
       <div className="patient-stats-strip">
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#E6EEF9', color: '#0F52BA' }}>
+          <div className="stat-pill-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>
             <RiMoneyDollarCircleLine size={20} />
           </div>
           <div>
-            <div className="stat-pill-label">Total Revenue Collected</div>
+            <div className="stat-pill-label">{isPatient ? 'My Total Charges' : 'Total Revenue Collected'}</div>
             <div className="stat-pill-value">₹{stats.totalRevenue?.toLocaleString('en-IN')}</div>
           </div>
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
+          <div className="stat-pill-icon" style={{ background: '#FEF9C3', color: '#F59E0B' }}>
             <RiTimeLine size={20} />
           </div>
           <div>
-            <div className="stat-pill-label">Outstanding Balance Dues</div>
-            <div className="stat-pill-value" style={{ color: '#D97706' }}>
+            <div className="stat-pill-label">{isPatient ? 'My Balance Due' : 'Outstanding Balance Dues'}</div>
+            <div className="stat-pill-value" style={{ color: '#F59E0B' }}>
               ₹{stats.pendingAmount?.toLocaleString('en-IN')}
             </div>
           </div>
         </div>
 
         <div className="stat-pill-card">
-          <div className="stat-pill-icon" style={{ background: '#D1FAE5', color: '#059669' }}>
+          <div className="stat-pill-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>
             <RiCheckDoubleLine size={20} />
           </div>
           <div>
-            <div className="stat-pill-label">Settled Invoices</div>
+            <div className="stat-pill-label">{isPatient ? 'My Paid Invoices' : 'Settled Invoices'}</div>
             <div className="stat-pill-value">
               {stats.paidInvoices} / {stats.totalInvoices}
             </div>
@@ -329,7 +385,7 @@ const BillingDashboard = () => {
           </div>
           <div>
             <div className="stat-pill-label">Collection Rate</div>
-            <div className="stat-pill-value" style={{ fontSize: '0.95rem', color: '#059669' }}>
+            <div className="stat-pill-value" style={{ fontSize: '0.95rem', color: '#16A34A' }}>
               {collectionRate}% Settled
             </div>
           </div>

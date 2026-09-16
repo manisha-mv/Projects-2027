@@ -37,11 +37,11 @@ const ReceptionDashboard = ({ todayApts, userRole }) => {
   };
 
   const tiles = [
-    { label: "Today's Total",    value: counts.total,     bg: '#EFF6FF', color: '#1D4ED8', icon: '📅' },
-    { label: 'Scheduled',        value: counts.scheduled, bg: '#F1F5F9', color: '#475569', icon: '🗓️' },
-    { label: 'Waiting',          value: counts.waiting,   bg: '#FEF3C7', color: '#D97706', icon: '⏳' },
-    { label: 'In Consultation',  value: counts.inConsult, bg: '#EDE9FE', color: '#7C3AED', icon: '🩺' },
-    { label: 'Completed',        value: counts.completed, bg: '#D1FAE5', color: '#059669', icon: '✅' },
+    { label: "Today's Total",    value: counts.total,     bg: '#DBEAFE', color: '#1D4ED8', icon: '📅' },
+    { label: 'Scheduled',        value: counts.scheduled, bg: '#F1F5F9', color: '#64748B', icon: '🗓️' },
+    { label: 'Waiting',          value: counts.waiting,   bg: '#FEF9C3', color: '#F59E0B', icon: '⏳' },
+    { label: 'In Consultation',  value: counts.inConsult, bg: '#E0F2FE', color: '#0284C7', icon: '🩺' },
+    { label: 'Completed',        value: counts.completed, bg: '#DCFCE7', color: '#16A34A', icon: '✅' },
     { label: 'Cancelled',        value: counts.cancelled, bg: '#FEE2E2', color: '#DC2626', icon: '❌' },
     { label: 'No Show',          value: counts.noShow,    bg: '#FFF7ED', color: '#C2410C', icon: '👻' },
     { label: 'Emergency',        value: counts.emergency, bg: '#FEE2E2', color: '#991B1B', icon: '🚨' },
@@ -90,8 +90,10 @@ const AppointmentList = () => {
   const { user } = useAuth();
   const { addToast } = useToast();
   const role = user?.role?.toUpperCase() || 'RECEPTIONIST';
+  const isPatient = role === 'PATIENT' || !!user?.patientId;
+  const loggedInPatientId = user?.patientId || user?.id || 'P10025';
 
-  const canBook   = ['ADMIN', 'RECEPTIONIST', 'DOCTOR'].includes(role);
+  const canBook   = ['ADMIN', 'RECEPTIONIST', 'DOCTOR', 'PATIENT'].includes(role);
   const canEdit   = ['ADMIN', 'RECEPTIONIST'].includes(role);
 
   // ── State ──
@@ -122,11 +124,18 @@ const AppointmentList = () => {
   const loadAppointments = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await appointmentService.getAppointments({
+      const params = {
         search, date: filterDate, doctorId: filterDoctor,
         department: filterDept, status: filterStatus,
         page: currentPage, limit: PAGE_SIZE,
-      });
+      };
+
+      if (isPatient) {
+        params.patientId = loggedInPatientId;
+        params.patientName = user?.name || '';
+      }
+
+      const res = await appointmentService.getAppointments(params);
       setAppointments(res.appointments);
       setTotal(res.total);
       setTotalPages(res.pages);
@@ -135,7 +144,7 @@ const AppointmentList = () => {
     } finally {
       setLoading(false);
     }
-  }, [search, filterDate, filterDoctor, filterDept, filterStatus, currentPage, addToast]);
+  }, [search, filterDate, filterDoctor, filterDept, filterStatus, currentPage, isPatient, loggedInPatientId, user?.name, addToast]);
 
   const loadTodayApts = useCallback(async () => {
     const list = await appointmentService.getTodayAppointments();
@@ -298,8 +307,8 @@ const AppointmentList = () => {
     <div className="page-container">
       {/* Page Header */}
       <PageHeader
-        title="Appointments & Reception"
-        description="Manage today's appointments, patient check-ins, and doctor schedules."
+        title={isPatient ? "My Doctor Appointments & Timings" : "Appointments & Reception"}
+        description={isPatient ? "Scheduled doctor visit timings, appointment status, and patient details." : "Manage today's appointments, patient check-ins, and doctor schedules."}
         primaryAction={
           <div style={{ display: 'flex', gap: '8px' }}>
             <div className="cal-view-toggle">
@@ -325,8 +334,35 @@ const AppointmentList = () => {
         }
       />
 
-      {/* Reception Dashboard */}
-      <ReceptionDashboard todayApts={todayApts} userRole={role} />
+      {/* Patient Specific Banner OR Staff Reception Dashboard */}
+      {isPatient ? (
+        <div style={{
+          padding: '16px 20px',
+          background: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
+          borderRadius: '12px',
+          border: '1px solid #BFDBFE',
+          marginBottom: '20px',
+          display: 'flex',
+          justify: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '12px'
+        }}>
+          <div>
+            <div style={{ fontSize: '15px', fontWeight: '800', color: '#1E40AF' }}>
+              🗓️ Patient Appointment Record: {user?.name || 'Logged-In Patient'}
+            </div>
+            <div style={{ fontSize: '13px', color: '#1E3A8A', marginTop: '2px' }}>
+              Patient ID: <strong>{loggedInPatientId}</strong> • Displaying scheduled doctor visits &amp; exact appointment timing slots only.
+            </div>
+          </div>
+          <span style={{ padding: '6px 14px', background: '#2563EB', color: '#FFF', borderRadius: '20px', fontSize: '12px', fontWeight: '700' }}>
+            Patient Portal View
+          </span>
+        </div>
+      ) : (
+        <ReceptionDashboard todayApts={todayApts} userRole={role} />
+      )}
 
       {/* ── Filters Bar ── */}
       <div className="apt-filter-bar">

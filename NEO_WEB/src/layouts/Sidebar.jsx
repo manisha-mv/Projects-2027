@@ -31,10 +31,27 @@ import {
   RiSendPlane2Line,
   RiRouteLine,
   RiNotification3Line,
+  RiUser3Line,
+  RiSparklingFill,
 } from 'react-icons/ri';
+import { NeoLogoMark } from '../components/common/NeoLogo';
 import { useAuth } from '../contexts/AuthContext';
 
 const NAV_CONFIG = [
+  // ─── PATIENT PORTAL ───────────────────────────────────────────────────────
+  {
+    label: 'Patient Portal',
+    items: [
+      { id: 'patient-portal',  label: 'My Health Portal',      path: '/patient-portal',    icon: RiUserHeartLine,         roles: ['PATIENT'] },
+      { id: 'medical-records', label: 'My Medical Records',    path: '/medical-records',   icon: RiFileTextLine,          roles: ['PATIENT'] },
+      { id: 'appointments',    label: 'My Appointments',       path: '/appointments',      icon: RiCalendarLine,          roles: ['PATIENT'] },
+      { id: 'laboratory',       label: 'Lab & Diagnostics',     path: '/laboratory',        icon: RiFlaskLine,             roles: ['PATIENT'] },
+      { id: 'traceability',    label: 'Treatment Progress',    path: '/traceability',      icon: RiRouteLine,             roles: ['PATIENT'] },
+      { id: 'billing',         label: 'Invoices & Billing',    path: '/billing',           icon: RiMoneyDollarCircleLine, roles: ['PATIENT'] },
+      { id: 'complaints',      label: 'Care Team Inquiries',   path: '/complaints',        icon: RiAlertLine,             roles: ['PATIENT'] },
+    ],
+  },
+
   // ─── CORE ─────────────────────────────────────────────────────────────────
   {
     label: 'Core',
@@ -117,23 +134,25 @@ const Sidebar = ({ collapsed, onToggle, mobileOpen, onMobileClose }) => {
         className={`sidebar ${collapsed ? 'collapsed' : ''} ${mobileOpen ? 'mobile-open' : ''}`}
         aria-label="Main navigation"
       >
-        {/* Brand */}
+        {/* Professional Brand Header */}
         <div className="sidebar-brand">
           <div className="sidebar-brand-icon">
-            <RiHeartPulseLine size={16} />
+            <NeoLogoMark size={28} animated />
           </div>
           <div className="sidebar-brand-text">
-            <span className="sidebar-brand-name">NEO-HMS</span>
-            <span className="sidebar-brand-tagline">Hospital System</span>
+            <span className="sidebar-brand-name">NEO Care</span>
+            <span className="sidebar-brand-tagline">HOSPITAL SYSTEM</span>
           </div>
           {/* Live indicator — only when expanded */}
-          <div className="sidebar-live-pill" title="System online">
-            <span className="sidebar-live-dot" />
-            <span className="sidebar-live-label">LIVE</span>
-          </div>
+          {!collapsed && (
+            <div className="sidebar-live-pill" title="System connected & active">
+              <span className="sidebar-live-dot" />
+              <span className="sidebar-live-label">LIVE</span>
+            </div>
+          )}
         </div>
 
-        {/* Navigation */}
+        {/* Professional Navigation Menu */}
         <nav className="sidebar-nav" aria-label="Primary navigation">
           {filteredNav.map(section => (
             <div key={section.label} className="sidebar-nav-section">
@@ -141,7 +160,7 @@ const Sidebar = ({ collapsed, onToggle, mobileOpen, onMobileClose }) => {
               {section.items.map(item => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path ||
-                  (item.path !== '/dashboard' && location.pathname.startsWith(item.path));
+                  (item.path !== '/dashboard' && item.path !== '/patient-portal' && location.pathname.startsWith(item.path));
 
                 return (
                   <NavLink
@@ -151,7 +170,7 @@ const Sidebar = ({ collapsed, onToggle, mobileOpen, onMobileClose }) => {
                     className={`sidebar-nav-item ${isActive ? 'active' : ''}`}
                     onClick={onMobileClose}
                     aria-current={isActive ? 'page' : undefined}
-                    title={item.label}
+                    title={collapsed ? item.label : undefined}
                   >
                     <span className="sidebar-nav-icon">
                       <Icon />
@@ -169,14 +188,16 @@ const Sidebar = ({ collapsed, onToggle, mobileOpen, onMobileClose }) => {
           ))}
         </nav>
 
-        {/* User footer */}
+        {/* Professional User Footer */}
         <div className="sidebar-user-footer">
           <div className="sidebar-user-avatar">
-            {user?.initials || '?'}
+            {user?.name ? user.name.split(' ').map(n => n[0]).join('').slice(0, 2) : <RiUser3Line size={16} />}
           </div>
           <div className="sidebar-user-info">
-            <span className="sidebar-user-name">{user?.name || 'User'}</span>
-            <span className="sidebar-user-role">{user?.role || 'Role'}</span>
+            <span className="sidebar-user-name">{user?.name || 'Authorized User'}</span>
+            <span className="sidebar-user-role">
+              {role === 'PATIENT' ? 'Patient Portal' : (user?.role || 'Staff Member')}
+            </span>
           </div>
           {/* Collapse toggle inside user footer */}
           <button
@@ -184,9 +205,9 @@ const Sidebar = ({ collapsed, onToggle, mobileOpen, onMobileClose }) => {
             className="sidebar-collapse-btn"
             onClick={onToggle}
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            style={{ width: 28, height: 28, padding: 0, flexShrink: 0 }}
+            title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
-            {collapsed ? <RiArrowRightSLine size={16} /> : <RiArrowLeftSLine size={16} />}
+            {collapsed ? <RiArrowRightSLine size={18} /> : <RiArrowLeftSLine size={18} />}
           </button>
         </div>
       </aside>
@@ -195,3 +216,4 @@ const Sidebar = ({ collapsed, onToggle, mobileOpen, onMobileClose }) => {
 };
 
 export default Sidebar;
+

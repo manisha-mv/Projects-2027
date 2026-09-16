@@ -1,6 +1,7 @@
 // pages/Traceability/TreatmentTrace.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { RiRouteLine, RiSearchLine, RiTimeLine, RiFlaskLine, RiScanLine, RiMedicineBottleLine, RiHotelBedLine, RiScissorsLine, RiMoneyDollarCircleLine, RiSendPlane2Line, RiPulseLine } from 'react-icons/ri';
+import { useAuth } from '../../contexts/AuthContext';
 import traceabilityService from '../../services/traceabilityService';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
@@ -31,30 +32,35 @@ const ICON_MAP = {
 };
 
 export default function TreatmentTrace() {
-  const [patientIdInput, setPatientIdInput] = useState('P10025');
-  const [activePatientId, setActivePatientId] = useState('P10025');
+  const { user, role } = useAuth();
+  const isPatient = role === 'PATIENT' || !!user?.patientId;
+  const loggedInPatientId = user?.patientId || user?.id || 'P10025';
+
+  const [patientIdInput, setPatientIdInput] = useState(loggedInPatientId);
+  const [activePatientId, setActivePatientId] = useState(loggedInPatientId);
   const [timelineEvents, setTimelineEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchTimeline = useCallback(async (id) => {
-    if (!id.trim()) return;
+    const targetId = isPatient ? loggedInPatientId : (id || loggedInPatientId);
+    if (!targetId.trim()) return;
     setLoading(true);
     setError(null);
     try {
-      const res = await traceabilityService.getPatientTimeline(id.trim());
+      const res = await traceabilityService.getPatientTimeline(targetId.trim());
       setTimelineEvents(res.events || []);
-      setActivePatientId(id.trim());
+      setActivePatientId(targetId.trim());
     } catch (e) {
       setError(e.message);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [isPatient, loggedInPatientId]);
 
   useEffect(() => {
-    fetchTimeline('P10025');
-  }, [fetchTimeline]);
+    fetchTimeline(loggedInPatientId);
+  }, [fetchTimeline, loggedInPatientId]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -81,28 +87,55 @@ export default function TreatmentTrace() {
   return (
     <div className="module-page">
       <PageHeader
-        title="Treatment Traceability System"
-        subtitle="End-to-end verifiable clinical workflow sequence and patient audit trail"
+        title={isPatient ? "My Treatment Progress & Care Journey" : "Treatment Traceability System"}
+        subtitle={isPatient ? "End-to-end clinical workflow sequence and verifiable care progress for logged-in patient." : "End-to-end verifiable clinical workflow sequence and patient audit trail"}
         icon={<RiRouteLine />}
       />
 
-      {/* Patient Search */}
-      <div className="filter-bar">
-        <form onSubmit={handleSearch} style={{ display: 'flex', gap: '8px', flex: 1 }}>
-          <div className="search-box" style={{ flex: 1 }}>
-            <RiSearchLine className="search-icon" />
-            <input
-              className="search-input"
-              placeholder="Enter Patient ID (e.g. P10025, P10033, P10047)..."
-              value={patientIdInput}
-              onChange={(e) => setPatientIdInput(e.target.value)}
-            />
+      {isPatient ? (
+        <div style={{
+          padding: '16px 20px',
+          background: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
+          borderRadius: '12px',
+          border: '1px solid #BFDBFE',
+          marginBottom: '20px',
+          display: 'flex',
+          justify: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '12px'
+        }}>
+          <div>
+            <div style={{ fontSize: '15px', fontWeight: '800', color: '#1E40AF' }}>
+              📍 Care Journey &amp; Treatment Progress: {user?.name || 'Logged-In Patient'}
+            </div>
+            <div style={{ fontSize: '13px', color: '#1E3A8A', marginTop: '2px' }}>
+              Patient ID: <strong>{loggedInPatientId}</strong> • Displaying your step-by-step treatment lifecycle, doctor visits, and nursing care events.
+            </div>
           </div>
-          <button type="submit" className="btn btn-primary">
-            Trace Treatment Journey
-          </button>
-        </form>
-      </div>
+          <span style={{ padding: '6px 14px', background: '#2563EB', color: '#FFF', borderRadius: '20px', fontSize: '12px', fontWeight: '700' }}>
+            Patient Progress View
+          </span>
+        </div>
+      ) : (
+        /* Patient Search for Staff */
+        <div className="filter-bar">
+          <form onSubmit={handleSearch} style={{ display: 'flex', gap: '8px', flex: 1 }}>
+            <div className="search-box" style={{ flex: 1 }}>
+              <RiSearchLine className="search-icon" />
+              <input
+                className="search-input"
+                placeholder="Enter Patient ID (e.g. P10025, P10033, P10047)..."
+                value={patientIdInput}
+                onChange={(e) => setPatientIdInput(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Trace Treatment Journey
+            </button>
+          </form>
+        </div>
+      )}
 
       {/* Treatment Sequence Flow Diagram */}
       <div className="card" style={{ padding: '20px', overflowX: 'auto' }}>
