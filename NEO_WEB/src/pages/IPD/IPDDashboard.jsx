@@ -78,8 +78,8 @@ export default function IPDDashboard() {
 
   const bedStats = {
     total: beds.length,
-    occupied: beds.filter(b => b.isOccupied).length,
-    available: beds.filter(b => !b.isOccupied).length,
+    occupied: beds.filter(b => b.status === 'Occupied' || b.isOccupied).length,
+    available: beds.filter(b => b.status === 'Available' || (!b.isOccupied && b.status !== 'Occupied' && b.status !== 'Maintenance')).length,
   };
 
   const admissionColumns = [
@@ -118,13 +118,13 @@ export default function IPDDashboard() {
       key: 'doctorName',
       label: 'Attending Physician',
       width: '170px',
-      render: (val) => <span style={{ fontWeight: 500, fontSize: '13px' }}>{val}</span>,
+      render: (val, row) => <span style={{ fontWeight: 500, fontSize: '13px' }}>{val || row.attendingDoctor || 'Dr. Priya Sharma'}</span>,
     },
     {
       key: 'admitDate',
       label: 'Admission Date',
       width: '130px',
-      render: (val) => <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>{val}</span>,
+      render: (val, row) => <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>{val || row.admittedDate || 'Today'}</span>,
     },
     {
       key: 'condition',

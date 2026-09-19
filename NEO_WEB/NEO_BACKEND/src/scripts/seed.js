@@ -240,58 +240,36 @@ const SEED_PATIENTS = [
 // BEDS
 // ─────────────────────────────────────────────────────────────────────────────
 const SEED_BEDS = [
-  {
-    bedId: 'GW-01',
-    ward: 'General Ward',
-    type: 'Standard',
-    status: 'Available'
-  },
-  {
-    bedId: 'GW-02',
-    ward: 'General Ward',
-    type: 'Standard',
-    status: 'Available'
-  },
-  {
-    bedId: 'GW-03',
-    ward: 'General Ward',
-    type: 'Standard',
-    status: 'Maintenance'
-  },
-  {
-    bedId: 'GW-04',
-    ward: 'General Ward',
-    type: 'Standard',
-    status: 'Occupied',
-    patientId: 'P10025',
-    patientName: 'Arun Kumar'
-  },
-  {
-    bedId: 'ICU-01',
-    ward: 'Cardiology ICU',
-    type: 'ICU',
-    status: 'Available'
-  },
-  {
-    bedId: 'ICU-02',
-    ward: 'Cardiology ICU',
-    type: 'ICU',
-    status: 'Occupied',
-    patientId: 'P10067',
-    patientName: 'Rajesh Nair'
-  },
-  {
-    bedId: 'PW-01',
-    ward: 'Paediatric Ward',
-    type: 'Standard',
-    status: 'Available'
-  },
-  {
-    bedId: 'PW-02',
-    ward: 'Paediatric Ward',
-    type: 'Standard',
-    status: 'Available'
-  },
+  { bedId: 'GW-01', ward: 'General Ward', type: 'Standard', status: 'Available' },
+  { bedId: 'GW-02', ward: 'General Ward', type: 'Standard', status: 'Available' },
+  { bedId: 'GW-03', ward: 'General Ward', type: 'Standard', status: 'Maintenance' },
+  { bedId: 'GW-04', ward: 'General Ward', type: 'Standard', status: 'Occupied', patientId: 'P10025', patientName: 'Arun Kumar' },
+  { bedId: 'GW-05', ward: 'General Ward', type: 'Standard', status: 'Occupied', patientId: 'P10052', patientName: 'Mohammed Aslam' },
+  { bedId: 'GW-10', ward: 'General Ward', type: 'Standard', status: 'Occupied', patientId: 'P10075', patientName: 'Anil Deshmukh' },
+  { bedId: 'GW-12', ward: 'General Ward', type: 'Standard', status: 'Occupied', patientId: 'P10115', patientName: 'Ananya Roy' },
+  { bedId: 'GW-15', ward: 'General Ward', type: 'Standard', status: 'Occupied', patientId: 'P10011', patientName: 'Kavitha Rao' },
+  { bedId: 'CAR-01', ward: 'Cardiology ICU', type: 'ICU', status: 'Occupied', patientId: 'P10155', patientName: 'Venkat Raman' },
+  { bedId: 'CAR-02', ward: 'Cardiology ICU', type: 'ICU', status: 'Occupied', patientId: 'P10033', patientName: 'Sunita Iyer' },
+  { bedId: 'CAR-05', ward: 'Cardiology ICU', type: 'ICU', status: 'Occupied', patientId: 'P10031', patientName: 'Lalitha Iyer' },
+  { bedId: 'CAR-08', ward: 'Cardiology ICU', type: 'ICU', status: 'Occupied', patientId: 'P10071', patientName: 'Ravi Shankar' },
+  { bedId: 'ICU-02', ward: 'Cardiology ICU', type: 'ICU', status: 'Occupied', patientId: 'P10067', patientName: 'Rajesh Nair' },
+  { bedId: 'NEU-01', ward: 'Neurology', type: 'Standard', status: 'Occupied', patientId: 'P10060', patientName: 'Sunita Pillai' },
+  { bedId: 'NEU-03', ward: 'Neurology', type: 'Standard', status: 'Occupied', patientId: 'P10018', patientName: 'Karthik Suresh' },
+  { bedId: 'NEU-07', ward: 'Neurology', type: 'Standard', status: 'Occupied', patientId: 'P10047', patientName: 'Prakash Nair' },
+  { bedId: 'NEU-08', ward: 'Neurology', type: 'Standard', status: 'Available' },
+  { bedId: 'MAT-01', ward: 'Maternity', type: 'Maternity', status: 'Occupied', patientId: 'P10055', patientName: 'Fatima Begum' },
+  { bedId: 'MAT-03', ward: 'Maternity', type: 'Maternity', status: 'Occupied', patientId: 'P10041', patientName: 'Meena Devi' },
+  { bedId: 'ORT-04', ward: 'Orthopaedics', type: 'Standard', status: 'Occupied', patientId: 'P10085', patientName: 'Suresh Menon' },
+  { bedId: 'ORT-05', ward: 'Orthopaedics', type: 'Standard', status: 'Occupied', patientId: 'P10102', patientName: 'Vikram Malhotra' },
+  { bedId: 'ORT-11', ward: 'Orthopaedics', type: 'Standard', status: 'Occupied', patientId: 'P10062', patientName: 'Rajesh Varma' },
+  { bedId: 'PW-01', ward: 'Paediatrics', type: 'Standard', status: 'Available' },
+  { bedId: 'PW-02', ward: 'Paediatrics', type: 'Standard', status: 'Occupied', patientId: 'P10089', patientName: 'Lakshmi Pillai' },
+  { bedId: 'E-07', ward: 'Emergency', type: 'Emergency', status: 'Occupied', patientId: 'P10069', patientName: 'Deepa Thomas' },
+  { bedId: 'E-08', ward: 'Emergency', type: 'Emergency', status: 'Available' },
+  { bedId: 'SICU-01', ward: 'Surgical ICU', type: 'ICU', status: 'Occupied', patientId: 'P10150', patientName: 'Farida Khan' },
+  { bedId: 'PUL-02', ward: 'Pulmonology', type: 'Standard', status: 'Occupied', patientId: 'P10098', patientName: 'Geetha Krishnan' },
+  { bedId: 'PUL-04', ward: 'Pulmonology', type: 'Standard', status: 'Occupied', patientId: 'P10128', patientName: 'Suresh Gupta' },
+  { bedId: 'NEP-01', ward: 'Nephrology', type: 'Standard', status: 'Occupied', patientId: 'P10120', patientName: 'Harish Chandra' },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────

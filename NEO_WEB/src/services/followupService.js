@@ -16,7 +16,7 @@ const SEED = [
   { id: 'FU-004', followupId: 'FU-004', patientId: 'P10052', patientName: 'Mohammed Aslam', doctorId: 'D001', doctorName: 'Dr. Priya Sharma', department: 'General Medicine', scheduledDate: futureDate(-10), status: 'Completed', reason: 'Asthma follow-up', appointmentId: null, notes: 'Inhaler technique reviewed. Stable.', completedAt: futureDate(-10) },
 ];
 
-const getLocal = () => { try { const d = localStorage.getItem(STORE_KEY); if (d) return JSON.parse(d); } catch { /* */ } localStorage.setItem(STORE_KEY, JSON.stringify(SEED)); return SEED; };
+const getLocal = () => { try { const d = localStorage.getItem(STORE_KEY); if (d) { const parsed = JSON.parse(d); if (Array.isArray(parsed) && parsed.length >= 20) return parsed; } } catch { /* */ } localStorage.setItem(STORE_KEY, JSON.stringify(SEED)); return SEED; };
 const saveLocal = (data) => { try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch { /* */ } };
 const h = () => ({ 'Content-Type': 'application/json', ...(token() ? { Authorization: `Bearer ${token()}` } : {}) });
 

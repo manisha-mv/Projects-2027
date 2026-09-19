@@ -2,353 +2,547 @@
 // Emergency Department — API-first with localStorage fallback
 
 import { API_BASE_URL } from '../lib/apiClient';
-const STORE_KEY = 'neo_hms_emergency_v2';
+const STORE_KEY = 'neo_hms_emergency_v3';
 const token = () => localStorage.getItem('neohms_token');
 
 const now = () => new Date().toISOString();
-const todayT = (time) => new Date().toISOString().split('T')[0] + 'T' + time + ':00';
-const yestT  = (time) => new Date(Date.now() - 86400000).toISOString().split('T')[0] + 'T' + time + ':00';
-const twoDT  = (time) => new Date(Date.now() - 2 * 86400000).toISOString().split('T')[0] + 'T' + time + ':00';
 
-export const TRIAGE_LEVELS     = ['P1 - Critical', 'P2 - Urgent', 'P3 - Semi-Urgent', 'P4 - Non-Urgent'];
+export const TRIAGE_LEVELS = ['P1 - Critical', 'P2 - Urgent', 'P3 - Semi-Urgent', 'P4 - Non-Urgent'];
 export const EMERGENCY_STATUSES = ['Registered', 'Triaged', 'Under Treatment', 'Admitted', 'Discharged', 'Referred', 'Expired'];
 
 const SEED = [
-  // ── TODAY'S ACTIVE / RECENT CASES ─────────────────────────────────────────
   {
-    id: 'EM-2026-001', emergencyId: 'EM-2026-001',
-    patientId: 'P10069', patientName: 'Deepa Thomas', age: 31, gender: 'Female',
-    phone: '+91 97400 11223', arrivalTime: todayT('08:28'),
-    chiefComplaint: 'Severe acute abdominal pain (RLQ), nausea, vomiting since 6 hrs',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Priya Sharma', bedId: 'E-07',
-    treatment: 'IV Fluids 1L NS started, IV Ondansetron 4mg, USG Abdomen ordered, Surgery consult called',
-    admittedAt: todayT('09:10'),
-    notes: 'Emergency admission — Acute Perforated Appendicitis confirmed on USG. Surgery booked.',
+    id: "EM-2026-101",
+    emergencyId: "EM-2026-101",
+    patientId: "P10025",
+    patientName: "Arun Kumar",
+    age: 42,
+    gender: "Male",
+    phone: "+91 98450 12345",
+    arrivalTime: "2026-09-18T08:15:00.000Z",
+    chiefComplaint: "Severe chest pain & shortness of breath",
+    triage: "P1 - Critical",
+    status: "Admitted",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-01",
+    treatment: "Immediate ECG, oxygen support, IV nitroglycerin, cardiac monitor",
+    admittedAt: "2026-09-18T09:30:00.000Z",
+    dischargedAt: null,
+    notes: "Transferred to Cardiology ICU"
   },
   {
-    id: 'EM-2026-002', emergencyId: 'EM-2026-002',
-    patientId: null, patientName: 'Unidentified Male (RTA)', age: 38, gender: 'Male',
-    phone: null, arrivalTime: todayT('09:15'),
-    chiefComplaint: 'RTA — Head trauma, unconscious, brought by ambulance, GCS 8/15',
-    triage: 'P1 - Critical', status: 'Under Treatment',
-    assignedDoctor: 'Dr. Rahul Mehta', bedId: 'E-08',
-    treatment: 'C-spine immobilization, STAT CT Brain ordered, IV access x2, O2 10L/min via mask',
+    id: "EM-2026-102",
+    emergencyId: "EM-2026-102",
+    patientId: "P10041",
+    patientName: "Meena Devi",
+    age: 35,
+    gender: "Female",
+    phone: "+91 97112 88341",
+    arrivalTime: "2026-09-18T09:15:00.000Z",
+    chiefComplaint: "Acute abdominal pain & vomiting",
+    triage: "P3 - Semi-Urgent",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Priya Sharma",
+    bedId: "E-02",
+    treatment: "IV fluids, antiemetics, abdominal ultrasound ordered",
     admittedAt: null,
-    notes: 'No ID found. Brought by passerby. Police informed.',
+    dischargedAt: null,
+    notes: "Awaiting lab reports"
   },
   {
-    id: 'EM-2026-003', emergencyId: 'EM-2026-003',
-    patientId: 'P10025', patientName: 'Arun Kumar', age: 42, gender: 'Male',
-    phone: '+91 98450 12345', arrivalTime: todayT('07:45'),
-    chiefComplaint: 'Severe hypertensive urgency — BP 210/115, throbbing headache, blurred vision',
-    triage: 'P2 - Urgent', status: 'Discharged',
-    assignedDoctor: 'Dr. Priya Sharma', bedId: 'E-03',
-    treatment: 'IV Labetalol 20mg bolus, BP monitoring every 15 min, ECG done — no ST changes',
-    admittedAt: null, dischargedAt: todayT('10:30'),
-    notes: 'BP controlled to 150/90 in 2 hours. Discharged with medications adjustment. Follow-up in 48h.',
+    id: "EM-2026-103",
+    emergencyId: "EM-2026-103",
+    patientId: "P10067",
+    patientName: "Rajesh Nair",
+    age: 58,
+    gender: "Male",
+    phone: "+91 94471 44520",
+    arrivalTime: "2026-09-18T10:15:00.000Z",
+    chiefComplaint: "Sudden onset right-sided weakness",
+    triage: "P1 - Critical",
+    status: "Admitted",
+    assignedDoctor: "Dr. Ananya Menon",
+    bedId: "E-03",
+    treatment: "Stroke protocol, STAT CT Brain, IV thrombolysis prep",
+    admittedAt: "2026-09-18T11:00:00.000Z",
+    dischargedAt: null,
+    notes: "Admitted under Neurology"
   },
   {
-    id: 'EM-2026-004', emergencyId: 'EM-2026-004',
-    patientId: null, patientName: 'Rekha Sharma', age: 65, gender: 'Female',
-    phone: '+91 99011 44532', arrivalTime: todayT('10:05'),
-    chiefComplaint: 'Sudden onset right-sided weakness, slurred speech, facial droop — FAST positive',
-    triage: 'P1 - Critical', status: 'Under Treatment',
-    assignedDoctor: 'Dr. Ananya Menon', bedId: 'E-02',
-    treatment: 'FAST exam done, Stroke team activated, CT Brain ordered, IV access, NIH stroke scale 14',
+    id: "EM-2026-104",
+    emergencyId: "EM-2026-104",
+    patientId: "P10033",
+    patientName: "Sunita Iyer",
+    age: 50,
+    gender: "Female",
+    phone: "+91 98860 11223",
+    arrivalTime: "2026-09-18T11:15:00.000Z",
+    chiefComplaint: "Palpitations & dizziness",
+    triage: "P2 - Urgent",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Kiran Rao",
+    bedId: "E-04",
+    treatment: "Continuous telemetry monitoring, IV Beta blockers",
     admittedAt: null,
-    notes: 'Suspected acute ischemic stroke. Thrombolysis eligibility being assessed.',
+    dischargedAt: null,
+    notes: "Stable heart rate achieved"
   },
   {
-    id: 'EM-2026-005', emergencyId: 'EM-2026-005',
-    patientId: 'P10052', patientName: 'Mohammed Aslam', age: 36, gender: 'Male',
-    phone: '+91 91672 33410', arrivalTime: todayT('08:50'),
-    chiefComplaint: 'Acute asthma attack — severe wheeze, SpO2 84%, unable to complete sentences',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Rekha Singh', bedId: 'E-04',
-    treatment: 'Salbutamol nebulization x3, IV Hydrocortisone 200mg, O2 via venture mask 40%, SpO2 improving to 94%',
-    admittedAt: todayT('09:00'),
-    notes: 'Admitted to Pulmonology. Responded well to bronchodilators.',
-  },
-  {
-    id: 'EM-2026-006', emergencyId: 'EM-2026-006',
-    patientId: null, patientName: 'Sanjay Pillai', age: 55, gender: 'Male',
-    phone: '+91 94412 78900', arrivalTime: todayT('11:20'),
-    chiefComplaint: 'Central crushing chest pain radiating to left arm, diaphoresis — onset 45 min',
-    triage: 'P1 - Critical', status: 'Under Treatment',
-    assignedDoctor: 'Dr. Kiran Rao', bedId: 'E-01',
-    treatment: 'ECG — ST elevation leads V1-V4 (STEMI). Aspirin 325mg, Clopidogrel 600mg given. Cath lab activated.',
+    id: "EM-2026-105",
+    emergencyId: "EM-2026-105",
+    patientId: "P10047",
+    patientName: "Prakash Nair",
+    age: 54,
+    gender: "Male",
+    phone: "+91 98860 77123",
+    arrivalTime: "2026-09-18T12:15:00.000Z",
+    chiefComplaint: "High grade fever & rigor",
+    triage: "P3 - Semi-Urgent",
+    status: "Discharged",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-05",
+    treatment: "Antipyretics, blood cultures, IV fluids",
     admittedAt: null,
-    notes: 'STEMI protocol activated. Door-to-balloon target <90 min.',
+    dischargedAt: "2026-09-18T16:00:00.000Z",
+    notes: "Discharged on oral antibiotics"
   },
   {
-    id: 'EM-2026-007', emergencyId: 'EM-2026-007',
-    patientId: 'P10089', patientName: 'Lakshmi Pillai', age: 8, gender: 'Female',
-    phone: '+91 96003 11230', arrivalTime: todayT('09:30'),
-    chiefComplaint: 'High fever 104°F, febrile convulsion — 1 episode lasting 3 min, now post-ictal',
-    triage: 'P2 - Urgent', status: 'Triaged',
-    assignedDoctor: 'Dr. Ananya Menon', bedId: 'E-05',
-    treatment: 'IV Diazepam 5mg given (seizure aborted), IV Paracetamol 250mg, blood culture sent',
+    id: "EM-2026-106",
+    emergencyId: "EM-2026-106",
+    patientId: "P10055",
+    patientName: "Fatima Begum",
+    age: 29,
+    gender: "Female",
+    phone: "+91 91672 99001",
+    arrivalTime: "2026-09-18T13:15:00.000Z",
+    chiefComplaint: "Labour pain with rupture of membranes",
+    triage: "P2 - Urgent",
+    status: "Admitted",
+    assignedDoctor: "Dr. Rekha Singh",
+    bedId: "E-06",
+    treatment: "Fetal heart rate monitoring, transfer to Labour Suite",
+    admittedAt: "2026-09-18T14:00:00.000Z",
+    dischargedAt: null,
+    notes: "Admitted to Maternity Ward"
+  },
+  {
+    id: "EM-2026-107",
+    emergencyId: "EM-2026-107",
+    patientId: "P10062",
+    patientName: "Rajesh Varma",
+    age: 64,
+    gender: "Male",
+    phone: "+91 98230 44512",
+    arrivalTime: "2026-09-18T14:15:00.000Z",
+    chiefComplaint: "Right leg injury following fall",
+    triage: "P2 - Urgent",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Suresh Bhat",
+    bedId: "E-07",
+    treatment: "Limb splinting, analgesics, STAT X-Ray Femur",
     admittedAt: null,
-    notes: 'Paediatric emergency. Child alert now. Paediatrics referral made.',
+    dischargedAt: null,
+    notes: "Possible intertrochanteric fracture"
   },
   {
-    id: 'EM-2026-008', emergencyId: 'EM-2026-008',
-    patientId: null, patientName: 'Geeta Nair', age: 28, gender: 'Female',
-    phone: '+91 93342 67891', arrivalTime: todayT('12:00'),
-    chiefComplaint: 'Anaphylaxis — generalized urticaria, throat tightness, BP 70/40 after insect sting',
-    triage: 'P1 - Critical', status: 'Registered',
-    assignedDoctor: 'Dr. Priya Sharma', bedId: 'E-06',
-    treatment: 'IM Adrenaline 0.5mg given, IV Hydrocortisone, IV antihistamine, fluids running',
+    id: "EM-2026-108",
+    emergencyId: "EM-2026-108",
+    patientId: "P10069",
+    patientName: "Deepa Thomas",
+    age: 31,
+    gender: "Female",
+    phone: "+91 98451 22334",
+    arrivalTime: "2026-09-18T15:00:00.000Z",
+    chiefComplaint: "Acute right lower quadrant pain",
+    triage: "P2 - Urgent",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-08",
+    treatment: "IV analgesia, surgical consultation for appendicitis",
     admittedAt: null,
-    notes: 'Bee sting anaphylaxis. Responding to Adrenaline. Monitoring.',
+    dischargedAt: null,
+    notes: "NPO maintained"
   },
   {
-    id: 'EM-2026-009', emergencyId: 'EM-2026-009',
-    patientId: 'P10128', patientName: 'Suresh Gupta', age: 54, gender: 'Male',
-    phone: '+91 98012 44200', arrivalTime: todayT('07:15'),
-    chiefComplaint: 'Severe breathlessness at rest, unable to speak, SpO2 78%, COPD history',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Rekha Singh', bedId: 'E-09',
-    treatment: 'NIV BiPAP started, IV Methylprednisolone 125mg, Salbutamol nebulization Q20min',
-    admittedAt: todayT('07:30'),
-    notes: 'Severe COPD exacerbation. Admitted to Pulmonology ICU.',
-  },
-  {
-    id: 'EM-2026-010', emergencyId: 'EM-2026-010',
-    patientId: null, patientName: 'Arjun Menon', age: 19, gender: 'Male',
-    phone: '+91 99441 32000', arrivalTime: todayT('13:45'),
-    chiefComplaint: 'Alleged poisoning — ingested unknown quantity of sleeping tablets, drowsy',
-    triage: 'P2 - Urgent', status: 'Triaged',
-    assignedDoctor: 'Dr. Rahul Mehta', bedId: 'E-10',
-    treatment: 'Gastric lavage done, Activated charcoal 50g given, IV access, continuous monitoring',
+    id: "EM-2026-109",
+    emergencyId: "EM-2026-109",
+    patientId: "P10011",
+    patientName: "Kavitha Rao",
+    age: 44,
+    gender: "Female",
+    phone: "+91 98760 12345",
+    arrivalTime: "2026-09-18T15:45:00.000Z",
+    chiefComplaint: "Severe migraine & photophobia",
+    triage: "P3 - Semi-Urgent",
+    status: "Discharged",
+    assignedDoctor: "Dr. Ananya Menon",
+    bedId: "E-09",
+    treatment: "IV NSAIDs, dark room rest, hydration",
     admittedAt: null,
-    notes: 'Intentional ingestion. Psychiatry consult requested. Parents informed.',
-  },
-
-  // ── YESTERDAY'S CASES ─────────────────────────────────────────────────────
-  {
-    id: 'EM-2026-011', emergencyId: 'EM-2026-011',
-    patientId: 'P10033', patientName: 'Sunita Iyer', age: 50, gender: 'Female',
-    phone: '+91 98200 55123', arrivalTime: yestT('06:40'),
-    chiefComplaint: 'Acute chest pain, sweating, jaw pain — onset 30 min',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Kiran Rao', bedId: 'E-01',
-    treatment: 'ECG: NSTEMI — ST depression V4-V6. Aspirin 325mg, Heparin started. Troponin elevated.',
-    admittedAt: yestT('07:15'),
-    notes: 'NSTEMI confirmed. Admitted to Cardiology ICU bed CAR-02.',
+    dischargedAt: "2026-09-18T18:30:00.000Z",
+    notes: "Symptomatic relief achieved"
   },
   {
-    id: 'EM-2026-012', emergencyId: 'EM-2026-012',
-    patientId: null, patientName: 'Kavitha Menon', age: 34, gender: 'Female',
-    phone: '+91 98771 20033', arrivalTime: yestT('10:30'),
-    chiefComplaint: 'RTA — fall from two-wheeler, right leg pain, unable to walk, deformity',
-    triage: 'P2 - Urgent', status: 'Admitted',
-    assignedDoctor: 'Dr. Suresh Bhat', bedId: 'E-05',
-    treatment: 'X-ray femur: comminuted fracture. IV Tramadol, Thomas splint applied, blood sent pre-op',
-    admittedAt: yestT('11:00'),
-    notes: 'Admitted to Orthopaedics for ORIF. Surgery scheduled.',
-  },
-  {
-    id: 'EM-2026-013', emergencyId: 'EM-2026-013',
-    patientId: 'P10047', patientName: 'Prakash Nair', age: 54, gender: 'Male',
-    phone: '+91 98860 77123', arrivalTime: yestT('08:05'),
-    chiefComplaint: 'Severe migraine — throbbing unilateral headache 9/10, photophobia, vomiting',
-    triage: 'P2 - Urgent', status: 'Discharged',
-    assignedDoctor: 'Dr. Ananya Menon', bedId: 'E-06',
-    treatment: 'IV Sumatriptan 6mg SC, IV Metoclopramide, darkroom rest, CT Brain: no bleed',
-    admittedAt: null, dischargedAt: yestT('11:30'),
-    notes: 'Headache resolved. Discharged with Sumatriptan nasal spray prescription.',
-  },
-  {
-    id: 'EM-2026-014', emergencyId: 'EM-2026-014',
-    patientId: null, patientName: 'Pooja Desai', age: 22, gender: 'Female',
-    phone: '+91 92200 19910', arrivalTime: yestT('14:20'),
-    chiefComplaint: 'Severe diabetic ketoacidosis — vomiting, Kussmaul breathing, glucose 480mg/dL',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Priya Sharma', bedId: 'E-03',
-    treatment: 'IV Normal Saline 1L bolus, Insulin drip 0.1U/kg/hr, potassium monitoring',
-    admittedAt: yestT('14:40'),
-    notes: 'Type 1 DM, new diagnosis. Admitted to General Medicine ward.',
-  },
-  {
-    id: 'EM-2026-015', emergencyId: 'EM-2026-015',
-    patientId: 'P10041', patientName: 'Meena Devi', age: 35, gender: 'Female',
-    phone: '+91 97112 88341', arrivalTime: yestT('16:00'),
-    chiefComplaint: 'Post-operative fever 103°F, wound redness, discharge from abdominal incision',
-    triage: 'P2 - Urgent', status: 'Admitted',
-    assignedDoctor: 'Dr. Priya Sharma', bedId: 'E-04',
-    treatment: 'Wound swab sent for culture, IV Piperacillin-Tazobactam 4.5g started, Paracetamol IV',
-    admittedAt: yestT('16:30'),
-    notes: 'SSI (Surgical Site Infection) suspected. Admitted to surgical ward.',
-  },
-  {
-    id: 'EM-2026-016', emergencyId: 'EM-2026-016',
-    patientId: null, patientName: 'Ramesh Varma', age: 70, gender: 'Male',
-    phone: '+91 98110 77312', arrivalTime: yestT('20:10'),
-    chiefComplaint: 'Fall at home — head strike on floor, confusion, scalp laceration 5cm',
-    triage: 'P2 - Urgent', status: 'Discharged',
-    assignedDoctor: 'Dr. Rahul Mehta', bedId: 'E-07',
-    treatment: 'Wound sutured with 5 sutures, CT Brain: No intracranial bleed, anti-tetanus given',
-    admittedAt: null, dischargedAt: yestT('23:00'),
-    notes: 'CT clear. Discharged with wound care instructions. Follow-up in 7 days for suture removal.',
-  },
-  {
-    id: 'EM-2026-017', emergencyId: 'EM-2026-017',
-    patientId: null, patientName: 'Priya Krishnan', age: 29, gender: 'Female',
-    phone: '+91 90001 23344', arrivalTime: yestT('22:30'),
-    chiefComplaint: 'Sudden onset palpitations, HR 180bpm, dizziness, pre-syncope',
-    triage: 'P1 - Critical', status: 'Discharged',
-    assignedDoctor: 'Dr. Kiran Rao', bedId: 'E-02',
-    treatment: 'ECG: SVT. Vagal manoeuvre attempted — Valsalva successful. Reverted to sinus rhythm.',
-    admittedAt: null, dischargedAt: yestT('23:45'),
-    notes: 'SVT resolved spontaneously with Valsalva. Discharged. EP clinic referral given.',
-  },
-
-  // ── TWO DAYS AGO CASES ────────────────────────────────────────────────────
-  {
-    id: 'EM-2026-018', emergencyId: 'EM-2026-018',
-    patientId: 'P10067', patientName: 'Rajesh Nair', age: 58, gender: 'Male',
-    phone: '+91 94471 44520', arrivalTime: twoDT('06:00'),
-    chiefComplaint: 'Acute dyspnea, orthopnea, bilateral leg swelling, SpO2 89%',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Kiran Rao', bedId: 'E-01',
-    treatment: 'IV Furosemide 80mg, Oxygen BiPAP, CXR: bilateral pulmonary edema',
-    admittedAt: twoDT('06:20'),
-    notes: 'Acute decompensated heart failure. Admitted to Cardiology ICU.',
-  },
-  {
-    id: 'EM-2026-019', emergencyId: 'EM-2026-019',
-    patientId: null, patientName: 'Fatima Hussain', age: 40, gender: 'Female',
-    phone: '+91 99332 10001', arrivalTime: twoDT('09:30'),
-    chiefComplaint: 'Sudden severe lower back pain after lifting — unable to stand, shooting to right leg',
-    triage: 'P3 - Semi-Urgent', status: 'Discharged',
-    assignedDoctor: 'Dr. Suresh Bhat', bedId: 'E-06',
-    treatment: 'IV Diclofenac 75mg, Muscle relaxants, X-ray lumbar: no fracture. MRI ordered OPD',
-    admittedAt: null, dischargedAt: twoDT('12:00'),
-    notes: 'Acute disc prolapse L4-L5 suspected. Discharged with analgesics.',
-  },
-  {
-    id: 'EM-2026-020', emergencyId: 'EM-2026-020',
-    patientId: 'P10062', patientName: 'Rajesh Varma', age: 51, gender: 'Male',
-    phone: '+91 98112 34110', arrivalTime: twoDT('05:30'),
-    chiefComplaint: 'Fall on right hip — unable to bear weight, severe pain, external rotation of right leg',
-    triage: 'P2 - Urgent', status: 'Admitted',
-    assignedDoctor: 'Dr. Suresh Bhat', bedId: 'E-03',
-    treatment: 'Pelvis X-ray: right NOF fracture. IV Morphine 2mg, Thomas splint, NBM for surgery',
-    admittedAt: twoDT('06:00'),
-    notes: 'Admitted to Orthopaedics. Right THA surgery done today.',
-  },
-  {
-    id: 'EM-2026-021', emergencyId: 'EM-2026-021',
-    patientId: null, patientName: 'Ajay Patel', age: 17, gender: 'Male',
-    phone: '+91 97712 03355', arrivalTime: twoDT('13:00'),
-    chiefComplaint: 'Alleged chemical burn to left forearm — acid splash at science lab',
-    triage: 'P2 - Urgent', status: 'Referred',
-    assignedDoctor: 'Dr. Rahul Mehta', bedId: 'E-07',
-    treatment: 'Irrigation with copious water 20min, Wound dressed, referred to Plastic Surgery',
+    id: "EM-2026-110",
+    emergencyId: "EM-2026-110",
+    patientId: "P10052",
+    patientName: "Mohammed Aslam",
+    age: 46,
+    gender: "Male",
+    phone: "+91 99880 55443",
+    arrivalTime: "2026-09-18T16:30:00.000Z",
+    chiefComplaint: "Severe asthma exacerbation & wheezing",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-10",
+    treatment: "Nebulization Salbutamol + Ipratropium, IV Hydrocortisone, O2 therapy",
     admittedAt: null,
-    notes: 'Referred to Burns/Plastic Surgery OPD for further management.',
+    dischargedAt: null,
+    notes: "SpO2 improved to 96%"
   },
   {
-    id: 'EM-2026-022', emergencyId: 'EM-2026-022',
-    patientId: null, patientName: 'Shantha Bai', age: 78, gender: 'Female',
-    phone: '+91 96640 22100', arrivalTime: twoDT('16:45'),
-    chiefComplaint: 'Altered sensorium, confusion, fever 102°F — brought by son, unable to respond',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Ananya Menon', bedId: 'E-02',
-    treatment: 'IV antibiotics started empirically, blood culture, urine culture, CT Brain: no bleed',
-    admittedAt: twoDT('17:00'),
-    notes: 'Septic encephalopathy suspected. Admitted to Neurology ward.',
-  },
-  {
-    id: 'EM-2026-023', emergencyId: 'EM-2026-023',
-    patientId: 'P10115', patientName: 'Ananya Roy', age: 38, gender: 'Female',
-    phone: '+91 98220 67001', arrivalTime: twoDT('11:30'),
-    chiefComplaint: 'Hypoglycemic episode — glucose 38mg/dL, cold sweats, tremors, confusion',
-    triage: 'P2 - Urgent', status: 'Discharged',
-    assignedDoctor: 'Dr. Priya Sharma', bedId: 'E-05',
-    treatment: 'IV Dextrose 50% 50ml, repeat glucose 96mg/dL in 20min, Biscuits given',
-    admittedAt: null, dischargedAt: twoDT('13:00'),
-    notes: 'Hypoglycemia resolved. Diabetes regimen adjusted. Discharged safely.',
-  },
-  {
-    id: 'EM-2026-024', emergencyId: 'EM-2026-024',
-    patientId: null, patientName: 'Ramakrishnan G', age: 63, gender: 'Male',
-    phone: '+91 94410 88120', arrivalTime: twoDT('18:00'),
-    chiefComplaint: 'Haematemesis — vomiting frank blood x3, volume approx 300ml, dizziness',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Kiran Rao', bedId: 'E-01',
-    treatment: '2 large-bore IVs, 1L NS rapid infusion, PPI IV drip, GI bleed protocol activated',
-    admittedAt: twoDT('18:20'),
-    notes: 'Suspected peptic ulcer bleed. Urgent endoscopy planned.',
-  },
-  {
-    id: 'EM-2026-025', emergencyId: 'EM-2026-025',
-    patientId: null, patientName: 'Devika Iyer', age: 32, gender: 'Female',
-    phone: '+91 91100 55230', arrivalTime: twoDT('21:00'),
-    chiefComplaint: 'Active labour pains — contractions every 2 min, cord prolapse suspected',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Rekha Singh', bedId: 'E-04',
-    treatment: 'Obstetric emergency team activated, Trendelenburg position, Emergency LSCS prep',
-    admittedAt: twoDT('21:10'),
-    notes: 'Cord prolapse confirmed — emergency caesarean performed. Baby and mother stable.',
-  },
-  {
-    id: 'EM-2026-026', emergencyId: 'EM-2026-026',
-    patientId: null, patientName: 'Narayanan T', age: 48, gender: 'Male',
-    phone: '+91 98110 33002', arrivalTime: twoDT('08:15'),
-    chiefComplaint: 'Electric shock injury — grabbed live wire, burns on both hands, transient LOC',
-    triage: 'P2 - Urgent', status: 'Discharged',
-    assignedDoctor: 'Dr. Rahul Mehta', bedId: 'E-08',
-    treatment: 'ECG: normal sinus rhythm. Burns dressed. IV fluids for rhabdomyolysis prevention. CK level sent.',
-    admittedAt: null, dischargedAt: twoDT('14:00'),
-    notes: 'CK normal. Discharged with wound care and instructions. Follow-up 48h.',
-  },
-  {
-    id: 'EM-2026-027', emergencyId: 'EM-2026-027',
-    patientId: 'P10071', patientName: 'Ravi Shankar', age: 45, gender: 'Male',
-    phone: '+91 98550 12234', arrivalTime: twoDT('14:30'),
-    chiefComplaint: 'Sudden onset severe hypertensive crisis — BP 230/130, confusion, blurring',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Kiran Rao', bedId: 'E-09',
-    treatment: 'IV Labetalol infusion started, target BP reduction 20-25% in 1hr, fundoscopy: papilledema',
-    admittedAt: twoDT('14:50'),
-    notes: 'Hypertensive emergency with end-organ damage (papilledema). Admitted to Cardiology.',
-  },
-  {
-    id: 'EM-2026-028', emergencyId: 'EM-2026-028',
-    patientId: null, patientName: 'Sumithra K', age: 55, gender: 'Female',
-    phone: '+91 90330 11122', arrivalTime: twoDT('17:30'),
-    chiefComplaint: 'Acute right eye pain, redness, vision blurring — sudden onset at dusk',
-    triage: 'P3 - Semi-Urgent', status: 'Referred',
-    assignedDoctor: 'Dr. Rahul Mehta', bedId: 'E-05',
-    treatment: 'IV Acetazolamide given, pilocarpine drops applied, urgent ophthalmology referral',
+    id: "EM-2026-111",
+    emergencyId: "EM-2026-111",
+    patientId: "P10018",
+    patientName: "Karthik Suresh",
+    age: 38,
+    gender: "Male",
+    phone: "+91 97440 33211",
+    arrivalTime: "2026-09-18T17:10:00.000Z",
+    chiefComplaint: "Generalized tonic-clonic seizure at home",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Ananya Menon",
+    bedId: "E-11",
+    treatment: "IV Lorazepam, airway management, EEG monitoring",
     admittedAt: null,
-    notes: 'Acute angle-closure glaucoma suspected. Referred urgently to Ophthalmology.',
+    dischargedAt: null,
+    notes: "Post-ictal state, vitals stable"
   },
   {
-    id: 'EM-2026-029', emergencyId: 'EM-2026-029',
-    patientId: null, patientName: 'Nila P (Infant)', age: 1, gender: 'Female',
-    phone: '+91 98440 01123', arrivalTime: todayT('06:30'),
-    chiefComplaint: 'Infant — high fever 104°F, rigid neck, photophobia, bulging fontanelle',
-    triage: 'P1 - Critical', status: 'Admitted',
-    assignedDoctor: 'Dr. Ananya Menon', bedId: 'E-11',
-    treatment: 'IV Ceftriaxone 100mg/kg started, LP done, CSF sent for culture, IV Dexamethasone',
-    admittedAt: todayT('06:45'),
-    notes: 'Bacterial meningitis suspected. Admitted to Paediatric ICU.',
-  },
-  {
-    id: 'EM-2026-030', emergencyId: 'EM-2026-030',
-    patientId: null, patientName: 'Bhanu Reddy', age: 26, gender: 'Male',
-    phone: '+91 93341 20080', arrivalTime: todayT('05:45'),
-    chiefComplaint: 'Multi-trauma RTA — motorcycle vs truck, multiple lacerations, rib fractures, haemoptysis',
-    triage: 'P1 - Critical', status: 'Under Treatment',
-    assignedDoctor: 'Dr. Rahul Mehta', bedId: 'E-12',
-    treatment: 'ATLS protocol activated, CT chest: haemothorax. Chest tube inserted. O2 and IV fluids.',
+    id: "EM-2026-112",
+    emergencyId: "EM-2026-112",
+    patientId: "P10031",
+    patientName: "Lalitha Iyer",
+    age: 67,
+    gender: "Female",
+    phone: "+91 98401 99887",
+    arrivalTime: "2026-09-18T18:00:00.000Z",
+    chiefComplaint: "Severe epistaxis & BP 210/110 mmHg",
+    triage: "P2 - Urgent",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Priya Sharma",
+    bedId: "E-12",
+    treatment: "Anterior nasal packing, IV Labetalol",
     admittedAt: null,
-    notes: 'Major trauma — surgery team on standby. Haemothorax being drained.',
+    dischargedAt: null,
+    notes: "BP rechecked: 160/95 mmHg"
   },
+  {
+    id: "EM-2026-113",
+    emergencyId: "EM-2026-113",
+    patientId: "P10060",
+    patientName: "Sunita Pillai",
+    age: 40,
+    gender: "Female",
+    phone: "+91 94460 77889",
+    arrivalTime: "2026-09-18T18:45:00.000Z",
+    chiefComplaint: "Motorcycle accident with scalp laceration",
+    triage: "P2 - Urgent",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-13",
+    treatment: "Wound debridement & suturing, Tetanus toxoid, Cervical spine X-ray",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "No loss of consciousness reported"
+  },
+  {
+    id: "EM-2026-114",
+    emergencyId: "EM-2026-114",
+    patientId: "P10071",
+    patientName: "Ravi Shankar",
+    age: 55,
+    gender: "Male",
+    phone: "+91 98100 22334",
+    arrivalTime: "2026-09-18T19:20:00.000Z",
+    chiefComplaint: "Unstable angina & diaphoresis",
+    triage: "P1 - Critical",
+    status: "Admitted",
+    assignedDoctor: "Dr. Kiran Rao",
+    bedId: "E-14",
+    treatment: "Dual antiplatelet therapy, STAT Troponin I, heparin drip",
+    admittedAt: "2026-09-18T20:15:00.000Z",
+    dischargedAt: null,
+    notes: "Admitted to Cardiac Cath Lab"
+  },
+  {
+    id: "EM-2026-115",
+    emergencyId: "EM-2026-115",
+    patientId: "P10075",
+    patientName: "Anil Deshmukh",
+    age: 50,
+    gender: "Male",
+    phone: "+91 97650 44321",
+    arrivalTime: "2026-09-18T20:00:00.000Z",
+    chiefComplaint: "Hypoglycemic confusion (Blood Sugar 42 mg/dL)",
+    triage: "P1 - Critical",
+    status: "Discharged",
+    assignedDoctor: "Dr. Priya Sharma",
+    bedId: "E-15",
+    treatment: "IV 25% Dextrose bolus, blood glucose monitoring",
+    admittedAt: null,
+    dischargedAt: "2026-09-18T22:30:00.000Z",
+    notes: "Blood glucose normalized to 110 mg/dL"
+  },
+  {
+    id: "EM-2026-116",
+    emergencyId: "EM-2026-116",
+    patientId: "P10080",
+    patientName: "Pooja Hegde",
+    age: 27,
+    gender: "Female",
+    phone: "+91 99001 88776",
+    arrivalTime: "2026-09-18T20:45:00.000Z",
+    chiefComplaint: "Acute allergic reaction & facial edema following food intake",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-16",
+    treatment: "IM Epinephrine 0.3mg, IV Hydrocortisone & Pheniramine",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "Airway patent, edema subsiding"
+  },
+  {
+    id: "EM-2026-117",
+    emergencyId: "EM-2026-117",
+    patientId: "P10085",
+    patientName: "Suresh Menon",
+    age: 61,
+    gender: "Male",
+    phone: "+91 94472 11223",
+    arrivalTime: "2026-09-18T21:30:00.000Z",
+    chiefComplaint: "Severe flank pain radiating to groin",
+    triage: "P2 - Urgent",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-17",
+    treatment: "IV Tramadol, hydration, Non-contrast CT KUB",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "Suspected renal calculus"
+  },
+  {
+    id: "EM-2026-118",
+    emergencyId: "EM-2026-118",
+    patientId: "P10089",
+    patientName: "Lakshmi Pillai",
+    age: 6,
+    gender: "Female",
+    phone: "+91 99001 77233",
+    arrivalTime: "2026-09-18T22:15:00.000Z",
+    chiefComplaint: "Febrile seizure (Temp 102.5°F)",
+    triage: "P1 - Critical",
+    status: "Admitted",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-18",
+    treatment: "Rectal Diazepam, cooling measures, IV paracetamol",
+    admittedAt: "2026-09-18T23:00:00.000Z",
+    dischargedAt: null,
+    notes: "Admitted to Paediatrics"
+  },
+  {
+    id: "EM-2026-119",
+    emergencyId: "EM-2026-119",
+    patientId: "P10092",
+    patientName: "Vikramaditya Roy",
+    age: 71,
+    gender: "Male",
+    phone: "+91 98300 44556",
+    arrivalTime: "2026-09-18T23:00:00.000Z",
+    chiefComplaint: "Acute urinary retention & bladder pain",
+    triage: "P2 - Urgent",
+    status: "Discharged",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-19",
+    treatment: "Foley catheterization (drained 900ml urine)",
+    admittedAt: null,
+    dischargedAt: "2026-09-19T01:00:00.000Z",
+    notes: "Referred to Urology OPD"
+  },
+  {
+    id: "EM-2026-120",
+    emergencyId: "EM-2026-120",
+    patientId: "P10098",
+    patientName: "Geetha Krishnan",
+    age: 54,
+    gender: "Female",
+    phone: "+91 94475 66778",
+    arrivalTime: "2026-09-19T00:15:00.000Z",
+    chiefComplaint: "Hypertensive crisis (BP 220/120 mmHg)",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Priya Sharma",
+    bedId: "E-20",
+    treatment: "IV Nitropress infusion, continuous arterial line monitoring",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "ICU bed reserved"
+  },
+  {
+    id: "EM-2026-121",
+    emergencyId: "EM-2026-121",
+    patientId: "P10102",
+    patientName: "Vikram Malhotra",
+    age: 33,
+    gender: "Male",
+    phone: "+91 98112 33445",
+    arrivalTime: "2026-09-19T01:30:00.000Z",
+    chiefComplaint: "Open fracture right forearm following assault",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Suresh Bhat",
+    bedId: "E-01",
+    treatment: "Sterile dressing, IV antibiotics & tetanus, emergency OR prep",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "Scheduled for emergency debridement"
+  },
+  {
+    id: "EM-2026-122",
+    emergencyId: "EM-2026-122",
+    patientId: "P10108",
+    patientName: "Sangeetha Reddi",
+    age: 45,
+    gender: "Female",
+    phone: "+91 98480 11223",
+    arrivalTime: "2026-09-19T02:15:00.000Z",
+    chiefComplaint: "Severe hematemesis (vomiting blood)",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-02",
+    treatment: "Large bore IV access, IV Pantoprazole & Octreotide, blood crossmatch",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "Urgent GI endoscopy requested"
+  },
+  {
+    id: "EM-2026-123",
+    emergencyId: "EM-2026-123",
+    patientId: "P10115",
+    patientName: "Ananya Roy",
+    age: 24,
+    gender: "Female",
+    phone: "+91 98310 99887",
+    arrivalTime: "2026-09-19T03:00:00.000Z",
+    chiefComplaint: "Diabetic ketoacidosis (Blood Sugar 450 mg/dL, Ketones +3)",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Priya Sharma",
+    bedId: "E-03",
+    treatment: "IV Normal Saline hydration, regular insulin infusion",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "K+ monitoring Q1H"
+  },
+  {
+    id: "EM-2026-124",
+    emergencyId: "EM-2026-124",
+    patientId: "P10120",
+    patientName: "Harish Chandra",
+    age: 66,
+    gender: "Male",
+    phone: "+91 98105 44321",
+    arrivalTime: "2026-09-19T04:10:00.000Z",
+    chiefComplaint: "Hyperkalemia (K+ 6.8 mEq/L) with ECG changes",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-04",
+    treatment: "IV Calcium gluconate, Insulin + Dextrose, Salbutamol nebulization",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "STAT nephrology consult for hemodialysis"
+  },
+  {
+    id: "EM-2026-125",
+    emergencyId: "EM-2026-125",
+    patientId: "P10128",
+    patientName: "Suresh Gupta",
+    age: 59,
+    gender: "Male",
+    phone: "+91 98711 22334",
+    arrivalTime: "2026-09-19T05:20:00.000Z",
+    chiefComplaint: "Acute syncope & bradycardia (HR 32 bpm)",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Kiran Rao",
+    bedId: "E-05",
+    treatment: "IV Atropine 0.5mg, transcutaneous pacing prep",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "Temporary pacemaker insertion planned"
+  },
+  {
+    id: "EM-2026-126",
+    emergencyId: "EM-2026-126",
+    patientId: "P10135",
+    patientName: "Divya Mukhopadhyay",
+    age: 37,
+    gender: "Female",
+    phone: "+91 98302 11223",
+    arrivalTime: "2026-09-19T06:00:00.000Z",
+    chiefComplaint: "Thyroid storm symptoms (Fever 103°F, Tachycardia 150 bpm)",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-06",
+    treatment: "Propylthiouracil, Propranolol, Hydrocortisone, cooling blanket",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "ICU transfer arranged"
+  },
+  {
+    id: "EM-2026-127",
+    emergencyId: "EM-2026-127",
+    patientId: "P10140",
+    patientName: "Amitabh Saxena",
+    age: 60,
+    gender: "Male",
+    phone: "+91 98101 88776",
+    arrivalTime: "2026-09-19T07:15:00.000Z",
+    chiefComplaint: "Neutropenic fever post chemotherapy (ANC < 500)",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-07",
+    treatment: "Broad spectrum IV Piperacillin-Tazobactam, isolation protocol",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "STAT blood cultures sent"
+  },
+  {
+    id: "EM-2026-128",
+    emergencyId: "EM-2026-128",
+    patientId: "P10145",
+    patientName: "Rohit Shetty",
+    age: 41,
+    gender: "Male",
+    phone: "+91 98200 33445",
+    arrivalTime: "2026-09-19T08:00:00.000Z",
+    chiefComplaint: "Corneal chemical burn (alkali splash)",
+    triage: "P1 - Critical",
+    status: "Under Treatment",
+    assignedDoctor: "Dr. Rahul Mehta",
+    bedId: "E-08",
+    treatment: "Immediate Morgan lens eye irrigation with 2L Normal Saline, pH testing",
+    admittedAt: null,
+    dischargedAt: null,
+    notes: "Ophthalmology emergency consult"
+  }
 ];
 
 const getLocal = () => {
@@ -356,55 +550,78 @@ const getLocal = () => {
     const d = localStorage.getItem(STORE_KEY);
     if (d) {
       const parsed = JSON.parse(d);
-      if (Array.isArray(parsed) && parsed.length >= SEED.length) return parsed;
+      if (Array.isArray(parsed) && parsed.length >= 25) return parsed;
     }
   } catch { /* */ }
-  localStorage.setItem(STORE_KEY, JSON.stringify(SEED));
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(SEED)); } catch { /* */ }
   return SEED;
 };
-const saveLocal = (data) => { try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch { /* */ } };
-const h = () => ({ 'Content-Type': 'application/json', ...(token() ? { Authorization: `Bearer ${token()}` } : {}) });
+
+const saveLocal = (data) => {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(data));
+  } catch { /* */ }
+};
+
+const h = () => ({
+  'Content-Type': 'application/json',
+  ...(token() ? { Authorization: `Bearer ${token()}` } : {})
+});
 
 export const emergencyService = {
-  // ── Core list method (also aliased as getCases for dashboard compat) ──────
   async getPatients(params = {}) {
     const { search = '', status = '', triage = '', page = 1, limit = 100 } = params;
     try {
       const q = new URLSearchParams({ search, status, triage, page, limit }).toString();
       const res = await fetch(`${API_BASE_URL}/emergency/patients?${q}`, { headers: h() });
-      if (res.ok) { const d = await res.json(); if (d.success && d.data) return { patients: d.data, cases: d.data, total: d.pagination?.total || d.data.length, isLiveApi: true }; }
+      if (res.ok) {
+        const d = await res.json();
+        if (d.success && d.data) return { patients: d.data, cases: d.data, total: d.pagination?.total || d.data.length, isLiveApi: true };
+      }
     } catch { /* */ }
+
     let list = getLocal();
-    if (search.trim()) { const q = search.toLowerCase(); list = list.filter(e => e.patientName?.toLowerCase().includes(q) || e.emergencyId?.toLowerCase().includes(q) || e.chiefComplaint?.toLowerCase().includes(q)); }
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(e => e.patientName?.toLowerCase().includes(q) || e.emergencyId?.toLowerCase().includes(q) || e.chiefComplaint?.toLowerCase().includes(q));
+    }
     if (status && status !== 'All') list = list.filter(e => e.status === status);
     if (triage && triage !== 'All') list = list.filter(e => e.triage === triage);
     return { patients: list.slice((page - 1) * limit, page * limit), cases: list.slice((page - 1) * limit, page * limit), total: list.length, isLiveApi: false };
   },
 
-  // Alias for dashboard compatibility
   async getCases(params = {}) {
     return this.getPatients(params);
   },
 
   async registerEmergency(data) {
     const list = getLocal();
-    const id = `EM-${new Date().getFullYear()}-${String(list.length + 1).padStart(3, '0')}`;
+    const id = `EM-${new Date().getFullYear()}-${String(list.length + 101).padStart(3, '0')}`;
     const record = { id, emergencyId: id, ...data, arrivalTime: now(), status: 'Registered' };
     try {
       const res = await fetch(`${API_BASE_URL}/emergency/patients`, { method: 'POST', headers: h(), body: JSON.stringify(data) });
-      if (res.ok) { const d = await res.json(); if (d.success && d.data) { list.unshift(d.data); saveLocal(list); return { success: true, patient: d.data, isLiveApi: true }; } }
+      if (res.ok) {
+        const d = await res.json();
+        if (d.success && d.data) {
+          list.unshift(d.data);
+          saveLocal(list);
+          return { success: true, patient: d.data, isLiveApi: true };
+        }
+      }
     } catch { /* */ }
-    list.unshift(record); saveLocal(list);
+
+    list.unshift(record);
+    saveLocal(list);
     return { success: true, patient: record, isLiveApi: false };
   },
 
-  // Alias for dashboard compatibility
   async registerCase(data) {
     return this.registerEmergency(data);
   },
 
   async updateTriage(id, triage, notes = '') {
-    const list = getLocal(); const idx = list.findIndex(e => e.id === id);
+    const list = getLocal();
+    const idx = list.findIndex(e => e.id === id || e.emergencyId === id);
     if (idx === -1) throw new Error('Emergency patient not found');
     list[idx] = { ...list[idx], triage, notes: notes || list[idx].notes, status: list[idx].status === 'Registered' ? 'Triaged' : list[idx].status, triagedAt: now() };
     saveLocal(list);
@@ -412,7 +629,8 @@ export const emergencyService = {
   },
 
   async updateStatus(id, status, extra = {}) {
-    const list = getLocal(); const idx = list.findIndex(e => e.id === id);
+    const list = getLocal();
+    const idx = list.findIndex(e => e.id === id || e.emergencyId === id);
     if (idx === -1) throw new Error('Not found');
     list[idx] = { ...list[idx], status, ...extra };
     if (status === 'Discharged') list[idx].dischargedAt = now();
@@ -421,7 +639,6 @@ export const emergencyService = {
     return { success: true, patient: list[idx], isLiveApi: false };
   },
 
-  // Alias for dashboard compatibility
   async updateCaseStatus(id, status, extra = {}) {
     return this.updateStatus(id, status, extra);
   },

@@ -101,7 +101,7 @@ export default function BloodBankDashboard() {
     }
   };
 
-  const totalUnitsAvailable = inventory.reduce((sum, item) => sum + (item.available || 0), 0);
+  const totalUnitsAvailable = inventory.reduce((sum, item) => sum + (item.available ?? item.unitsAvailable ?? item.units ?? 0), 0);
   const totalReserved = inventory.reduce((sum, item) => sum + (item.reserved || 0), 0);
   const pendingReqs = requests.filter(r => r.status === 'Pending');
   const statReqs = pendingReqs.filter(r => r.urgency === 'STAT');
@@ -231,19 +231,20 @@ export default function BloodBankDashboard() {
       ) : activeTab === 'inventory' ? (
         <div className="blood-group-grid">
           {inventory.map((item) => {
-            const isLow = item.available <= 2;
-            const isCritical = item.available === 0;
-            const stockPct = Math.min(100, Math.round((item.available / 8) * 100));
+            const avail = item.available ?? item.unitsAvailable ?? item.units ?? 0;
+            const isLow = avail <= 2;
+            const isCritical = avail === 0;
+            const stockPct = Math.min(100, Math.round((avail / 20) * 100));
 
             return (
               <div
-                key={item.bloodGroup}
+                key={item.id || item.bloodGroup}
                 className={`blood-group-card ${isCritical ? 'critical' : ''}`}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div className="blood-group-badge">{item.bloodGroup}</div>
                   <Badge variant={isCritical ? 'danger' : isLow ? 'warning' : 'success'} size="sm">
-                    {item.available > 0 ? `${item.available} Available` : 'Out of Stock'}
+                    {avail > 0 ? `${avail} Available` : 'Out of Stock'}
                   </Badge>
                 </div>
 

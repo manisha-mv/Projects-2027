@@ -7,298 +7,1187 @@ const LOCAL_STORAGE_KEY = 'neo_hms_patients_v1';
 // Initial realistic dataset for NEO-HMS Smart Hospital
 const INITIAL_PATIENTS = [
   {
-    id: 'P10025',
-    patientId: 'P10025',
-    firstName: 'Arun',
-    lastName: 'Kumar',
-    name: 'Arun Kumar',
-    dateOfBirth: '1984-05-14',
-    age: 42,
-    gender: 'Male',
-    bloodGroup: 'O+',
-    contact: {
-      phone: '+91 98450 12345',
-      email: 'arun.kumar@gmail.com',
-      address: {
-        street: '12-A, M.G. Road',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        postalCode: '560001',
-        country: 'India',
-      },
+    "id": "P10025",
+    "patientId": "P10025",
+    "firstName": "Arun",
+    "lastName": "Kumar",
+    "name": "Arun Kumar",
+    "dateOfBirth": "1984-05-14",
+    "age": 42,
+    "gender": "Male",
+    "bloodGroup": "O+",
+    "contact": {
+      "phone": "+91 98450 12345",
+      "email": "arun.kumar@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
     },
-    emergencyContact: {
-      name: 'Sunita Kumar',
-      relation: 'Wife',
-      phone: '+91 98450 99887',
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98450 12345"
     },
-    allergies: [
-      { substance: 'Penicillin', reaction: 'Skin Rash', severity: 'Moderate' },
-      { substance: 'Peanuts', reaction: 'Anaphylaxis', severity: 'Severe' },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
     ],
-    medicalHistory: [
-      { condition: 'Essential Hypertension', since: '2021', notes: 'Controlled on Telmisartan 40mg' },
-      { condition: 'Type 2 Diabetes', since: '2023', notes: 'HbA1c 6.8%' },
+    "medicalHistory": [
+      {
+        "condition": "Essential Hypertension",
+        "since": "2022",
+        "notes": "Managed by Dr. Priya Sharma"
+      }
     ],
-    lastVisit: '2026-08-14',
-    status: 'Inpatient',
-    registeredDate: '2025-01-10',
-    notes: 'Admitted in General Ward GW-04 for blood pressure observation.',
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in General Ward (GW-04). Diagnosis: Essential Hypertension"
   },
   {
-    id: 'P10041',
-    patientId: 'P10041',
-    firstName: 'Meena',
-    lastName: 'Devi',
-    name: 'Meena Devi',
-    dateOfBirth: '1991-11-20',
-    age: 35,
-    gender: 'Female',
-    bloodGroup: 'B+',
-    contact: {
-      phone: '+91 97112 88341',
-      email: 'meena.devi@outlook.com',
-      address: {
-        street: '45 Lake View Colony',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        postalCode: '560037',
-        country: 'India',
-      },
+    "id": "P10041",
+    "patientId": "P10041",
+    "firstName": "Meena",
+    "lastName": "Devi",
+    "name": "Meena Devi",
+    "dateOfBirth": "1991-11-20",
+    "age": 35,
+    "gender": "Female",
+    "bloodGroup": "B+",
+    "contact": {
+      "phone": "+91 97112 88341",
+      "email": "meena.devi@outlook.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
     },
-    emergencyContact: {
-      name: 'Ramesh Devi',
-      relation: 'Husband',
-      phone: '+91 97112 88390',
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 97112 88341"
     },
-    allergies: [
-      { substance: 'Sulfa Drugs', reaction: 'Hives', severity: 'Mild' },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Gestational Diabetes",
+        "since": "2022",
+        "notes": "Managed by Dr. Rekha Singh"
+      }
     ],
-    medicalHistory: [
-      { condition: 'Gestational Diabetes', since: '2024', notes: 'Dietary management' },
-    ],
-    lastVisit: '2026-08-16',
-    status: 'Active',
-    registeredDate: '2025-03-22',
-    notes: 'Maternity OPD checkup scheduled weekly.',
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Maternity (MAT-03). Diagnosis: Gestational Diabetes"
   },
   {
-    id: 'P10067',
-    patientId: 'P10067',
-    firstName: 'Rajesh',
-    lastName: 'Nair',
-    name: 'Rajesh Nair',
-    dateOfBirth: '1968-03-08',
-    age: 58,
-    gender: 'Male',
-    bloodGroup: 'A+',
-    contact: {
-      phone: '+91 94471 44520',
-      email: 'rnair68@yahoo.com',
-      address: {
-        street: '88 Indira Nagar 2nd Stage',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        postalCode: '560038',
-        country: 'India',
-      },
+    "id": "P10067",
+    "patientId": "P10067",
+    "firstName": "Rajesh",
+    "lastName": "Nair",
+    "name": "Rajesh Nair",
+    "dateOfBirth": "1968-03-08",
+    "age": 58,
+    "gender": "Male",
+    "bloodGroup": "A+",
+    "contact": {
+      "phone": "+91 94471 44520",
+      "email": "rnair68@yahoo.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
     },
-    emergencyContact: {
-      name: 'Anjali Nair',
-      relation: 'Daughter',
-      phone: '+91 94471 99112',
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 94471 44520"
     },
-    allergies: [],
-    medicalHistory: [
-      { condition: 'Coronary Artery Disease', since: '2020', notes: 'Post Angioplasty 2021' },
-      { condition: 'Hyperlipidemia', since: '2019', notes: 'Atorvastatin 20mg daily' },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
     ],
-    lastVisit: '2026-08-12',
-    status: 'Outpatient',
-    registeredDate: '2024-09-15',
-    notes: 'Cardiology routine follow-up patient.',
+    "medicalHistory": [
+      {
+        "condition": "AMI – Post-Stent",
+        "since": "2022",
+        "notes": "Managed by Dr. Kiran Rao"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Cardiology ICU (ICU-02). Diagnosis: AMI – Post-Stent"
   },
   {
-    id: 'P10033',
-    patientId: 'P10033',
-    firstName: 'Sunita',
-    lastName: 'Iyer',
-    name: 'Sunita Iyer',
-    dateOfBirth: '1976-08-25',
-    age: 50,
-    gender: 'Female',
-    bloodGroup: 'AB+',
-    contact: {
-      phone: '+91 98200 55123',
-      email: 'sunita.iyer@gmail.com',
-      address: {
-        street: '104 Koramangala 4th Block',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        postalCode: '560034',
-        country: 'India',
-      },
+    "id": "P10033",
+    "patientId": "P10033",
+    "firstName": "Sunita",
+    "lastName": "Iyer",
+    "name": "Sunita Iyer",
+    "dateOfBirth": "1976-08-25",
+    "age": 50,
+    "gender": "Female",
+    "bloodGroup": "AB+",
+    "contact": {
+      "phone": "+91 98860 11223",
+      "email": "sunita.iyer@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
     },
-    emergencyContact: {
-      name: 'Venkatesh Iyer',
-      relation: 'Husband',
-      phone: '+91 98200 55199',
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98860 11223"
     },
-    allergies: [
-      { substance: 'Aspirin', reaction: 'Bronchospasm', severity: 'Severe' },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
     ],
-    medicalHistory: [
-      { condition: 'Acute Myocardial Infarction', since: '2026', notes: 'Stent placed Aug 13' },
+    "medicalHistory": [
+      {
+        "condition": "Coronary Artery Disease",
+        "since": "2022",
+        "notes": "Managed by Dr. Kiran Rao"
+      }
     ],
-    lastVisit: '2026-08-17',
-    status: 'Inpatient',
-    registeredDate: '2025-06-01',
-    notes: 'Currently in Cardiology ICU bed CAR-02.',
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Cardiology (CAR-02). Diagnosis: Coronary Artery Disease"
   },
   {
-    id: 'P10052',
-    patientId: 'P10052',
-    firstName: 'Mohammed',
-    lastName: 'Aslam',
-    name: 'Mohammed Aslam',
-    dateOfBirth: '1989-12-05',
-    age: 36,
-    gender: 'Male',
-    bloodGroup: 'B-',
-    contact: {
-      phone: '+91 91672 33410',
-      email: 'm.aslam@gmail.com',
-      address: {
-        street: '18 Frazer Town',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        postalCode: '560005',
-        country: 'India',
-      },
+    "id": "P10047",
+    "patientId": "P10047",
+    "firstName": "Prakash",
+    "lastName": "Nair",
+    "name": "Prakash Nair",
+    "dateOfBirth": "1972-02-14",
+    "age": 54,
+    "gender": "Male",
+    "bloodGroup": "O-",
+    "contact": {
+      "phone": "+91 98860 77123",
+      "email": "pnair@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
     },
-    emergencyContact: {
-      name: 'Aisha Aslam',
-      relation: 'Sister',
-      phone: '+91 91672 33499',
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98860 77123"
     },
-    allergies: [],
-    medicalHistory: [
-      { condition: 'Bronchial Asthma', since: '2015', notes: 'Inhaler as needed' },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
     ],
-    lastVisit: '2026-08-18',
-    status: 'Active',
-    registeredDate: '2025-11-18',
-    notes: 'General Medicine consultation completed today.',
+    "medicalHistory": [
+      {
+        "condition": "Chronic Migraine",
+        "since": "2022",
+        "notes": "Managed by Dr. Ananya Menon"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Neurology (NEU-07). Diagnosis: Chronic Migraine"
   },
   {
-    id: 'P10047',
-    patientId: 'P10047',
-    firstName: 'Prakash',
-    lastName: 'Nair',
-    name: 'Prakash Nair',
-    dateOfBirth: '1972-04-18',
-    age: 54,
-    gender: 'Male',
-    bloodGroup: 'O-',
-    contact: {
-      phone: '+91 98860 77123',
-      email: 'pnair@gmail.com',
-      address: {
-        street: '72 Jayanagar 9th Block',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        postalCode: '560069',
-        country: 'India',
-      },
+    "id": "P10055",
+    "patientId": "P10055",
+    "firstName": "Fatima",
+    "lastName": "Begum",
+    "name": "Fatima Begum",
+    "dateOfBirth": "1997-04-18",
+    "age": 29,
+    "gender": "Female",
+    "bloodGroup": "B-",
+    "contact": {
+      "phone": "+91 91672 99001",
+      "email": "fatima.b@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
     },
-    emergencyContact: {
-      name: 'Deepa Nair',
-      relation: 'Wife',
-      phone: '+91 98860 77999',
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 91672 99001"
     },
-    allergies: [
-      { substance: 'Iodine Contrast', reaction: 'Nausea & Rash', severity: 'Moderate' },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Labour – Active",
+        "since": "2022",
+        "notes": "Managed by Dr. Rekha Singh"
+      }
     ],
-    medicalHistory: [
-      { condition: 'Chronic Migraine', since: '2018', notes: 'Acute flare-up under evaluation' },
-    ],
-    lastVisit: '2026-08-15',
-    status: 'Inpatient',
-    registeredDate: '2025-04-12',
-    notes: 'Admitted in Neurology Ward NEU-07.',
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Maternity (MAT-01). Diagnosis: Labour – Active"
   },
   {
-    id: 'P10011',
-    patientId: 'P10011',
-    firstName: 'Kavitha',
-    lastName: 'Rao',
-    name: 'Kavitha Rao',
-    dateOfBirth: '1982-01-30',
-    age: 44,
-    gender: 'Female',
-    bloodGroup: 'A-',
-    contact: {
-      phone: '+91 99001 22884',
-      email: 'kavitha.rao@techindia.com',
-      address: {
-        street: '55 Whitefield Main Rd',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        postalCode: '560066',
-        country: 'India',
-      },
+    "id": "P10062",
+    "patientId": "P10062",
+    "firstName": "Rajesh",
+    "lastName": "Varma",
+    "name": "Rajesh Varma",
+    "dateOfBirth": "1962-09-05",
+    "age": 64,
+    "gender": "Male",
+    "bloodGroup": "A-",
+    "contact": {
+      "phone": "+91 98230 44512",
+      "email": "r.varma@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
     },
-    emergencyContact: {
-      name: 'Suresh Rao',
-      relation: 'Brother',
-      phone: '+91 99001 22800',
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98230 44512"
     },
-    allergies: [],
-    medicalHistory: [
-      { condition: 'Hypothyroidism', since: '2022', notes: 'Levothyroxine 50mcg' },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
     ],
-    lastVisit: '2026-08-10',
-    status: 'Discharged',
-    registeredDate: '2024-10-05',
-    notes: 'Discharged following recovery from viral fever.',
+    "medicalHistory": [
+      {
+        "condition": "Post Hip Replacement",
+        "since": "2022",
+        "notes": "Managed by Dr. Suresh Bhat"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Orthopedics (ORT-11). Diagnosis: Post Hip Replacement"
   },
   {
-    id: 'P10069',
-    patientId: 'P10069',
-    firstName: 'Deepa',
-    lastName: 'Thomas',
-    name: 'Deepa Thomas',
-    dateOfBirth: '1995-07-12',
-    age: 31,
-    gender: 'Female',
-    bloodGroup: 'AB-',
-    contact: {
-      phone: '+91 97400 11223',
-      email: 'deepa.thomas@gmail.com',
-      address: {
-        street: '22 HSR Layout Sector 1',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        postalCode: '560102',
-        country: 'India',
-      },
+    "id": "P10069",
+    "patientId": "P10069",
+    "firstName": "Deepa",
+    "lastName": "Thomas",
+    "name": "Deepa Thomas",
+    "dateOfBirth": "1995-07-12",
+    "age": 31,
+    "gender": "Female",
+    "bloodGroup": "AB-",
+    "contact": {
+      "phone": "+91 97400 11223",
+      "email": "deepa.thomas@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
     },
-    emergencyContact: {
-      name: 'Mathew Thomas',
-      relation: 'Father',
-      phone: '+91 97400 11999',
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 97400 11223"
     },
-    allergies: [
-      { substance: 'NSAIDs', reaction: 'Gastric Distress', severity: 'Moderate' },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Acute Appendicitis",
+        "since": "2022",
+        "notes": "Managed by Dr. Rahul Mehta"
+      }
     ],
-    medicalHistory: [
-      { condition: 'Acute Appendicitis', since: '2026', notes: 'Emergency evaluation' },
-    ],
-    lastVisit: '2026-08-18',
-    status: 'Inpatient',
-    registeredDate: '2026-08-18',
-    notes: 'Admitted via Emergency Department to ICU Bed E-07.',
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Emergency (E-07). Diagnosis: Acute Appendicitis"
   },
+  {
+    "id": "P10011",
+    "patientId": "P10011",
+    "firstName": "Kavitha",
+    "lastName": "Rao",
+    "name": "Kavitha Rao",
+    "dateOfBirth": "1982-01-30",
+    "age": 44,
+    "gender": "Female",
+    "bloodGroup": "A-",
+    "contact": {
+      "phone": "+91 99001 22884",
+      "email": "kavitha.rao@techindia.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 99001 22884"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Hypothyroidism",
+        "since": "2022",
+        "notes": "Managed by Dr. Priya Sharma"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Discharged",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in General Ward (GW-02). Diagnosis: Hypothyroidism"
+  },
+  {
+    "id": "P10052",
+    "patientId": "P10052",
+    "firstName": "Mohammed",
+    "lastName": "Aslam",
+    "name": "Mohammed Aslam",
+    "dateOfBirth": "1980-03-12",
+    "age": 46,
+    "gender": "Male",
+    "bloodGroup": "B+",
+    "contact": {
+      "phone": "+91 91672 33410",
+      "email": "m.aslam@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 91672 33410"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Bronchial Asthma",
+        "since": "2022",
+        "notes": "Managed by Dr. Priya Sharma"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in General Ward (GW-05). Diagnosis: Bronchial Asthma"
+  },
+  {
+    "id": "P10018",
+    "patientId": "P10018",
+    "firstName": "Karthik",
+    "lastName": "Suresh",
+    "name": "Karthik Suresh",
+    "dateOfBirth": "1988-10-09",
+    "age": 38,
+    "gender": "Male",
+    "bloodGroup": "A+",
+    "contact": {
+      "phone": "+91 98190 77654",
+      "email": "ksuresh@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98190 77654"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Seizure Disorder",
+        "since": "2022",
+        "notes": "Managed by Dr. Ananya Menon"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Neurology (NEU-03). Diagnosis: Seizure Disorder"
+  },
+  {
+    "id": "P10031",
+    "patientId": "P10031",
+    "firstName": "Lalitha",
+    "lastName": "Iyer",
+    "name": "Lalitha Iyer",
+    "dateOfBirth": "1959-12-01",
+    "age": 67,
+    "gender": "Female",
+    "bloodGroup": "O+",
+    "contact": {
+      "phone": "+91 94480 33211",
+      "email": "liyer@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 94480 33211"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Hypertensive Heart Disease",
+        "since": "2022",
+        "notes": "Managed by Dr. Kiran Rao"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Cardiology (CAR-05). Diagnosis: Hypertensive Heart Disease"
+  },
+  {
+    "id": "P10060",
+    "patientId": "P10060",
+    "firstName": "Sunita",
+    "lastName": "Pillai",
+    "name": "Sunita Pillai",
+    "dateOfBirth": "1986-06-22",
+    "age": 40,
+    "gender": "Female",
+    "bloodGroup": "B+",
+    "contact": {
+      "phone": "+91 97411 88223",
+      "email": "spillai@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 97411 88223"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Cervical Spondylosis",
+        "since": "2022",
+        "notes": "Managed by Dr. Ananya Menon"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Neurology (NEU-01). Diagnosis: Cervical Spondylosis"
+  },
+  {
+    "id": "P10071",
+    "patientId": "P10071",
+    "firstName": "Ravi",
+    "lastName": "Shankar",
+    "name": "Ravi Shankar",
+    "dateOfBirth": "1971-04-14",
+    "age": 55,
+    "gender": "Male",
+    "bloodGroup": "O-",
+    "contact": {
+      "phone": "+91 98200 11998",
+      "email": "rshankar@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98200 11998"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Angina Pectoris",
+        "since": "2022",
+        "notes": "Managed by Dr. Kiran Rao"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Cardiology (CAR-08). Diagnosis: Angina Pectoris"
+  },
+  {
+    "id": "P10075",
+    "patientId": "P10075",
+    "firstName": "Anil",
+    "lastName": "Deshmukh",
+    "name": "Anil Deshmukh",
+    "dateOfBirth": "1976-08-11",
+    "age": 50,
+    "gender": "Male",
+    "bloodGroup": "A+",
+    "contact": {
+      "phone": "+91 98210 55443",
+      "email": "anild@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98210 55443"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Type 2 Diabetes Mellitus",
+        "since": "2022",
+        "notes": "Managed by Dr. Priya Sharma"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in General Ward (GW-10). Diagnosis: Type 2 Diabetes Mellitus"
+  },
+  {
+    "id": "P10080",
+    "patientId": "P10080",
+    "firstName": "Pooja",
+    "lastName": "Hegde",
+    "name": "Pooja Hegde",
+    "dateOfBirth": "1999-01-15",
+    "age": 27,
+    "gender": "Female",
+    "bloodGroup": "B+",
+    "contact": {
+      "phone": "+91 97654 32109",
+      "email": "phegde@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 97654 32109"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Psoriasis Vulgaris",
+        "since": "2022",
+        "notes": "Managed by Dr. Leena Joseph"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Dermatology (DER-02). Diagnosis: Psoriasis Vulgaris"
+  },
+  {
+    "id": "P10085",
+    "patientId": "P10085",
+    "firstName": "Suresh",
+    "lastName": "Menon",
+    "name": "Suresh Menon",
+    "dateOfBirth": "1965-07-28",
+    "age": 61,
+    "gender": "Male",
+    "bloodGroup": "AB+",
+    "contact": {
+      "phone": "+91 94470 12345",
+      "email": "smenon@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 94470 12345"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Osteoarthritis Knee",
+        "since": "2022",
+        "notes": "Managed by Dr. Suresh Bhat"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Orthopedics (ORT-04). Diagnosis: Osteoarthritis Knee"
+  },
+  {
+    "id": "P10089",
+    "patientId": "P10089",
+    "firstName": "Lakshmi",
+    "lastName": "Pillai",
+    "name": "Lakshmi Pillai",
+    "dateOfBirth": "2020-05-19",
+    "age": 6,
+    "gender": "Female",
+    "bloodGroup": "O+",
+    "contact": {
+      "phone": "+91 98450 66778",
+      "email": "parent.pillai@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98450 66778"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Acute Tonsillitis",
+        "since": "2022",
+        "notes": "Managed by Dr. Vikram Nair"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Paediatrics (PW-02). Diagnosis: Acute Tonsillitis"
+  },
+  {
+    "id": "P10092",
+    "patientId": "P10092",
+    "firstName": "Vikramaditya",
+    "lastName": "Roy",
+    "name": "Vikramaditya Roy",
+    "dateOfBirth": "1955-11-03",
+    "age": 71,
+    "gender": "Male",
+    "bloodGroup": "B-",
+    "contact": {
+      "phone": "+91 98300 44332",
+      "email": "vroy@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98300 44332"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "BPH – Benign Prostatic Hyperplasia",
+        "since": "2022",
+        "notes": "Managed by Dr. Sanjay Dutt"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Urology (URO-01). Diagnosis: BPH – Benign Prostatic Hyperplasia"
+  },
+  {
+    "id": "P10098",
+    "patientId": "P10098",
+    "firstName": "Geetha",
+    "lastName": "Krishnan",
+    "name": "Geetha Krishnan",
+    "dateOfBirth": "1972-09-17",
+    "age": 54,
+    "gender": "Female",
+    "bloodGroup": "A+",
+    "contact": {
+      "phone": "+91 94460 77889",
+      "email": "gkrishnan@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 94460 77889"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "COPD Exacerbation",
+        "since": "2022",
+        "notes": "Managed by Dr. Alok Verma"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Pulmonology (PUL-02). Diagnosis: COPD Exacerbation"
+  },
+  {
+    "id": "P10102",
+    "patientId": "P10102",
+    "firstName": "Vikram",
+    "lastName": "Malhotra",
+    "name": "Vikram Malhotra",
+    "dateOfBirth": "1993-02-24",
+    "age": 33,
+    "gender": "Male",
+    "bloodGroup": "O+",
+    "contact": {
+      "phone": "+91 98110 99887",
+      "email": "vmalhotra@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98110 99887"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Right Femur Fracture",
+        "since": "2022",
+        "notes": "Managed by Dr. Suresh Bhat"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Orthopedics (ORT-05). Diagnosis: Right Femur Fracture"
+  },
+  {
+    "id": "P10108",
+    "patientId": "P10108",
+    "firstName": "Sangeetha",
+    "lastName": "Reddi",
+    "name": "Sangeetha Reddi",
+    "dateOfBirth": "1981-04-30",
+    "age": 45,
+    "gender": "Female",
+    "bloodGroup": "B+",
+    "contact": {
+      "phone": "+91 98480 11223",
+      "email": "sreddi@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98480 11223"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Chronic Gastritis",
+        "since": "2022",
+        "notes": "Managed by Dr. Rakesh Jhunjhun"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Gastroenterology (GAS-03). Diagnosis: Chronic Gastritis"
+  },
+  {
+    "id": "P10115",
+    "patientId": "P10115",
+    "firstName": "Ananya",
+    "lastName": "Roy",
+    "name": "Ananya Roy",
+    "dateOfBirth": "2002-12-10",
+    "age": 24,
+    "gender": "Female",
+    "bloodGroup": "A-",
+    "contact": {
+      "phone": "+91 98310 22334",
+      "email": "aroy@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98310 22334"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Type 1 Diabetes",
+        "since": "2022",
+        "notes": "Managed by Dr. Priya Sharma"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in General Ward (GW-12). Diagnosis: Type 1 Diabetes"
+  },
+  {
+    "id": "P10120",
+    "patientId": "P10120",
+    "firstName": "Harish",
+    "lastName": "Chandra",
+    "name": "Harish Chandra",
+    "dateOfBirth": "1960-01-20",
+    "age": 66,
+    "gender": "Male",
+    "bloodGroup": "AB-",
+    "contact": {
+      "phone": "+91 94150 33445",
+      "email": "hchandra@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 94150 33445"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Chronic Kidney Disease",
+        "since": "2022",
+        "notes": "Managed by Dr. Meera Nambiar"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Nephrology (NEP-01). Diagnosis: Chronic Kidney Disease"
+  },
+  {
+    "id": "P10128",
+    "patientId": "P10128",
+    "firstName": "Suresh",
+    "lastName": "Gupta",
+    "name": "Suresh Gupta",
+    "dateOfBirth": "1967-08-14",
+    "age": 59,
+    "gender": "Male",
+    "bloodGroup": "O+",
+    "contact": {
+      "phone": "+91 98100 55667",
+      "email": "sgupta@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98100 55667"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Severe Bronchospasm",
+        "since": "2022",
+        "notes": "Managed by Dr. Alok Verma"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Pulmonology (PUL-04). Diagnosis: Severe Bronchospasm"
+  },
+  {
+    "id": "P10135",
+    "patientId": "P10135",
+    "firstName": "Divya",
+    "lastName": "Mukhopadhyay",
+    "name": "Divya Mukhopadhyay",
+    "dateOfBirth": "1989-06-05",
+    "age": 37,
+    "gender": "Female",
+    "bloodGroup": "B+",
+    "contact": {
+      "phone": "+91 98301 66778",
+      "email": "divyam@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98301 66778"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Hyperthyroidism",
+        "since": "2022",
+        "notes": "Managed by Dr. Shalini Das"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Endocrinology (END-01). Diagnosis: Hyperthyroidism"
+  },
+  {
+    "id": "P10140",
+    "patientId": "P10140",
+    "firstName": "Amitabh",
+    "lastName": "Saxena",
+    "name": "Amitabh Saxena",
+    "dateOfBirth": "1966-03-29",
+    "age": 60,
+    "gender": "Male",
+    "bloodGroup": "A+",
+    "contact": {
+      "phone": "+91 98102 77889",
+      "email": "asaxena@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98102 77889"
+    },
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "reaction": "Rash",
+        "severity": "Mild"
+      }
+    ],
+    "medicalHistory": [
+      {
+        "condition": "Chemotherapy Protocol",
+        "since": "2022",
+        "notes": "Managed by Dr. Siddharth Roy"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Inpatient",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in Oncology (ONC-02). Diagnosis: Chemotherapy Protocol"
+  },
+  {
+    "id": "P10145",
+    "patientId": "P10145",
+    "firstName": "Rohit",
+    "lastName": "Shetty",
+    "name": "Rohit Shetty",
+    "dateOfBirth": "1985-10-14",
+    "age": 41,
+    "gender": "Male",
+    "bloodGroup": "O+",
+    "contact": {
+      "phone": "+91 98201 88990",
+      "email": "rshetty@gmail.com",
+      "address": {
+        "street": "Main Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India"
+      }
+    },
+    "emergencyContact": {
+      "name": "Emergency Contact",
+      "relation": "Family",
+      "phone": "+91 98201 88990"
+    },
+    "allergies": [],
+    "medicalHistory": [
+      {
+        "condition": "Chronic Sinusitis",
+        "since": "2022",
+        "notes": "Managed by Dr. Arun Krishnan"
+      }
+    ],
+    "lastVisit": "2026-08-15",
+    "status": "Active",
+    "registeredDate": "2025-01-10",
+    "notes": "Admitted in ENT (ENT-01). Diagnosis: Chronic Sinusitis"
+  }
 ];
 
 // Helper to calculate age from DOB
@@ -320,7 +1209,8 @@ const getLocalPatients = () => {
   try {
     const data = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (data) {
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length >= 20) return parsed;
     }
   } catch (err) {
     console.warn('Failed to parse local patient store', err);

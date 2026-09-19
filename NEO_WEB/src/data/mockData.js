@@ -1,4 +1,4 @@
-// NEO-HMS Mock Data — Phase 1 (Extended for UI Redesign)
+// NEO-HMS Mock Data — Phase 1 (Extended for UI Redesign & 25+ records per section)
 
 export const currentUser = {
   id: 'U001',
@@ -11,74 +11,82 @@ export const currentUser = {
   status: 'online',
 };
 
+// Realistic pool of Indian patient names and details for consistency across mockData
+const PATIENT_NAMES = [
+  'Arun Kumar', 'Meena Devi', 'Rajesh Nair', 'Sunita Iyer', 'Prakash Nair',
+  'Fatima Begum', 'Rajesh Varma', 'Deepa Thomas', 'Kavitha Rao', 'Mohammed Aslam',
+  'Sunita Pillai', 'Ravi Shankar', 'Anil Deshmukh', 'Pooja Hegde', 'Suresh Menon',
+  'Lakshmi Narayanan', 'Vikramaditya Roy', 'Geetha Krishnan', 'Manish Pandey', 'Sangeetha Reddi',
+  'Harish Chandra', 'Divya Mukhopadhyay', 'Amitabh Saxena', 'Rohit Shetty', 'Farida Khan',
+  'Venkat Raman', 'Aparna Sen', 'Tariq Ahmed', 'Bhavna Patel', 'Chetan Bhagat'
+];
+
 export const mockSearchResults = {
-  patients: [
-    { id: 'P10025', name: 'Arun Kumar',  age: 42, ward: 'General Ward' },
-    { id: 'P10041', name: 'Meena Devi',  age: 35, ward: 'Maternity' },
-    { id: 'P10067', name: 'Rajesh Nair', age: 58, ward: 'Cardiology' },
-  ],
-  appointments: [
-    { id: 'APT1024', time: '10:30 AM', patient: 'Arun Kumar',   doctor: 'Dr. Priya Sharma', status: 'Confirmed' },
-    { id: 'APT1025', time: '11:00 AM', patient: 'Meena Devi',   doctor: 'Dr. Kiran Rao',    status: 'Pending' },
-  ],
+  patients: PATIENT_NAMES.slice(0, 25).map((name, i) => ({
+    id: `P100${25 + i}`,
+    name,
+    age: 22 + ((i * 7) % 50),
+    ward: ['General Ward', 'Maternity', 'Cardiology', 'ICU', 'Orthopedics', 'Neurology'][i % 6]
+  })),
+  appointments: Array.from({ length: 25 }, (_, i) => ({
+    id: `APT10${24 + i}`,
+    time: `${8 + (i % 9)}:${i % 2 === 0 ? '00' : '30'} ${i % 9 >= 4 ? 'PM' : 'AM'}`,
+    patient: PATIENT_NAMES[i % PATIENT_NAMES.length],
+    doctor: ['Dr. Priya Sharma', 'Dr. Kiran Rao', 'Dr. Ananya Menon', 'Dr. Rekha Singh', 'Dr. Suresh Bhat'][i % 5],
+    status: ['Confirmed', 'Pending', 'In Consultation', 'Completed', 'Checked In'][i % 5]
+  })),
   doctors: [
-    { id: 'D001', name: 'Dr. Priya Sharma',   dept: 'General Medicine' },
-    { id: 'D002', name: 'Dr. Kiran Rao',       dept: 'Cardiology' },
-    { id: 'D003', name: 'Dr. Ananya Menon',    dept: 'Neurology' },
+    { id: 'D001', name: 'Dr. Priya Sharma', dept: 'General Medicine' },
+    { id: 'D002', name: 'Dr. Kiran Rao', dept: 'Cardiology' },
+    { id: 'D003', name: 'Dr. Ananya Menon', dept: 'Neurology' },
+    { id: 'D004', name: 'Dr. Rekha Singh', dept: 'Maternity & Gynaecology' },
+    { id: 'D005', name: 'Dr. Suresh Bhat', dept: 'Orthopaedics' },
+    { id: 'D006', name: 'Dr. Vikram Nair', dept: 'Paediatrics' },
+    { id: 'D007', name: 'Dr. Leena Joseph', dept: 'Dermatology' },
+    { id: 'D008', name: 'Dr. Arun Krishnan', dept: 'ENT' },
+    { id: 'D009', name: 'Dr. Pooja Gupta', dept: 'Ophthalmology' },
+    { id: 'D010', name: 'Dr. Rahul Mehta', dept: 'Emergency & Trauma' },
+    { id: 'D011', name: 'Dr. Sanjay Dutt', dept: 'Urology' },
+    { id: 'D012', name: 'Dr. Neha Kulkarni', dept: 'Psychiatry' },
+    { id: 'D013', name: 'Dr. Alok Verma', dept: 'Pulmonology' },
+    { id: 'D014', name: 'Dr. Shalini Das', dept: 'Endocrinology' },
+    { id: 'D015', name: 'Dr. Rakesh Jhunjhun', dept: 'Gastroenterology' },
+    { id: 'D016', name: 'Dr. Meera Nambiar', dept: 'Nephrology' },
+    { id: 'D017', name: 'Dr. Siddharth Roy', dept: 'Oncology' },
+    { id: 'D018', name: 'Dr. Farhan Akhtar', dept: 'Rheumatology' },
+    { id: 'D019', name: 'Dr. Swati Banerjee', dept: 'Hematology' },
+    { id: 'D020', name: 'Dr. Varun Dhawan', dept: 'Plastic Surgery' },
+    { id: 'D021', name: 'Dr. Kirti Azad', dept: 'Vascular Surgery' },
+    { id: 'D022', name: 'Dr. Vandana Luthra', dept: 'Pathology' },
+    { id: 'D023', name: 'Dr. Arvind Swamy', dept: 'Microbiology' },
+    { id: 'D024', name: 'Dr. Preeti Deshmukh', dept: 'Anesthesiology' },
+    { id: 'D025', name: 'Dr. Tanmay Bhatt', dept: 'Radiology' }
   ],
-  labOrders: [
-    { id: 'LAB2041', test: 'CBC Panel',     patient: 'P10025 – Arun Kumar', status: 'Pending' },
-    { id: 'LAB2042', test: 'Lipid Profile', patient: 'P10067 – Rajesh Nair', status: 'Ready' },
-  ],
+  labOrders: Array.from({ length: 25 }, (_, i) => ({
+    id: `LAB20${41 + i}`,
+    test: ['CBC Panel', 'Lipid Profile', 'Troponin I', 'Liver Function', 'Urine Culture', 'Thyroid Profile', 'HbA1c', 'CT Scan'][i % 8],
+    patient: `P100${25 + (i % 25)} – ${PATIENT_NAMES[i % PATIENT_NAMES.length]}`,
+    status: ['Pending', 'Ready', 'Processing', 'Sample Collected'][i % 4]
+  }))
 };
 
-export const mockNotifications = [
-  {
-    id: 'N001',
-    type: 'lab',
-    icon: 'lab',
-    title: 'Lab Result Available',
-    message: 'CBC Panel result is ready for Patient P10025 – Arun Kumar.',
-    time: '5 min ago',
-    read: false,
-  },
-  {
-    id: 'N002',
-    type: 'appointment',
-    icon: 'appointment',
-    title: 'New Appointment Scheduled',
-    message: 'APT1026 – Dr. Kiran Rao at 2:00 PM with Sunita Pillai.',
-    time: '18 min ago',
-    read: false,
-  },
-  {
-    id: 'N003',
-    type: 'pharmacy',
-    icon: 'pharmacy',
-    title: 'Pharmacy Order Pending',
-    message: 'Order ORD3081 awaiting approval for Patient P10041.',
-    time: '42 min ago',
-    read: false,
-  },
-  {
-    id: 'N004',
-    type: 'complaint',
-    icon: 'complaint',
-    title: 'New Complaint Submitted',
-    message: 'Complaint #C-204 submitted regarding Ward 3B facilities.',
-    time: '1 hr ago',
-    read: true,
-  },
-  {
-    id: 'N005',
-    type: 'emergency',
-    icon: 'emergency',
-    title: 'Emergency Admission',
-    message: 'New emergency patient admitted – Bed E-07 assigned.',
-    time: '2 hr ago',
-    read: true,
-  },
-];
+export const mockNotifications = Array.from({ length: 25 }, (_, i) => {
+  const types = ['lab', 'appointment', 'pharmacy', 'complaint', 'emergency', 'billing', 'nursing'];
+  const titles = [
+    'Lab Result Available', 'New Appointment Scheduled', 'Pharmacy Order Pending',
+    'New Complaint Submitted', 'Emergency Admission', 'Invoice Issued', 'Vitals Alert'
+  ];
+  const type = types[i % types.length];
+  return {
+    id: `N0${i + 1 < 10 ? '0' + (i + 1) : i + 1}`,
+    type,
+    icon: type,
+    title: titles[i % titles.length],
+    message: `Activity notification #${i + 1} regarding Patient P100${25 + i} (${PATIENT_NAMES[i % PATIENT_NAMES.length]}).`,
+    time: `${(i + 1) * 7} min ago`,
+    read: i > 5
+  };
+});
 
 // ── Dashboard KPI Stats (with trend data) ───────────────────
 export const mockDashboardStats = [
@@ -128,73 +136,141 @@ export const mockDashboardStats = [
   },
 ];
 
-// ── Today's Appointments ─────────────────────────────────────
-export const mockTodayAppointments = [
-  { id: 'APT1020', time: '09:00', patient: 'Karthik Suresh',  patientId: 'P10018', initials: 'KS', doctor: 'Dr. Ananya Menon',  dept: 'Neurology',     status: 'Completed',   type: 'Consultation' },
-  { id: 'APT1021', time: '09:30', patient: 'Lalitha Iyer',    patientId: 'P10031', initials: 'LI', doctor: 'Dr. Kiran Rao',    dept: 'Cardiology',    status: 'Completed',   type: 'Follow-up' },
-  { id: 'APT1022', time: '10:00', patient: 'Mohammed Aslam',  patientId: 'P10052', initials: 'MA', doctor: 'Dr. Priya Sharma', dept: 'Gen. Medicine', status: 'In Progress', type: 'New Patient' },
-  { id: 'APT1023', time: '10:30', patient: 'Arun Kumar',      patientId: 'P10025', initials: 'AK', doctor: 'Dr. Priya Sharma', dept: 'Gen. Medicine', status: 'Confirmed',   type: 'Follow-up' },
-  { id: 'APT1024', time: '11:00', patient: 'Meena Devi',      patientId: 'P10041', initials: 'MD', doctor: 'Dr. Kiran Rao',    dept: 'Cardiology',    status: 'Pending',     type: 'Consultation' },
-  { id: 'APT1025', time: '11:30', patient: 'Sunita Pillai',   patientId: 'P10060', initials: 'SP', doctor: 'Dr. Ananya Menon', dept: 'Neurology',     status: 'Confirmed',   type: 'Review' },
-  { id: 'APT1026', time: '14:00', patient: 'Ravi Shankar',    patientId: 'P10071', initials: 'RS', doctor: 'Dr. Kiran Rao',    dept: 'Cardiology',    status: 'Pending',     type: 'Consultation' },
-];
+// ── Today's Appointments (25 items) ──────────────────────────
+export const mockTodayAppointments = Array.from({ length: 25 }, (_, i) => {
+  const depts = ['Neurology', 'Cardiology', 'General Medicine', 'Maternity', 'Orthopedics', 'Paediatrics', 'Dermatology'];
+  const doctors = ['Dr. Ananya Menon', 'Dr. Kiran Rao', 'Dr. Priya Sharma', 'Dr. Rekha Singh', 'Dr. Suresh Bhat', 'Dr. Vikram Nair'];
+  const statuses = ['Completed', 'Completed', 'In Progress', 'Confirmed', 'Pending', 'Scheduled', 'Checked In'];
+  const types = ['Consultation', 'Follow-up', 'New Patient', 'Review', 'Checkup'];
+  const pName = PATIENT_NAMES[i % PATIENT_NAMES.length];
+  const initials = pName.split(' ').map(n => n[0]).join('');
+  const hour = 8 + Math.floor(i / 2);
+  const min = (i % 2) * 30;
+  const timeStr = `${hour < 10 ? '0' + hour : hour}:${min === 0 ? '00' : min}`;
 
-// ── Active Admissions (IPD) ──────────────────────────────────
-export const mockActiveAdmissions = [
-  { id: 'ADM001', patient: 'Arun Kumar',      patientId: 'P10025', initials: 'AK', bed: 'GW-04', ward: 'General Ward',    admitDate: '14 Aug', days: 2,  condition: 'Stable',   doctor: 'Dr. Priya Sharma', diagnosis: 'Hypertension' },
-  { id: 'ADM002', patient: 'Sunita Iyer',     patientId: 'P10033', initials: 'SI', bed: 'CAR-02', ward: 'Cardiology',     admitDate: '13 Aug', days: 3,  condition: 'Serious',  doctor: 'Dr. Kiran Rao',    diagnosis: 'AMI – Post-Stent' },
-  { id: 'ADM003', patient: 'Prakash Nair',    patientId: 'P10047', initials: 'PN', bed: 'NEU-07', ward: 'Neurology',      admitDate: '15 Aug', days: 1,  condition: 'Stable',   doctor: 'Dr. Ananya Menon', diagnosis: 'Migraine – Acute' },
-  { id: 'ADM004', patient: 'Fatima Begum',    patientId: 'P10055', initials: 'FB', bed: 'MAT-03', ward: 'Maternity',      admitDate: '16 Aug', days: 0,  condition: 'Stable',   doctor: 'Dr. Rekha Singh',  diagnosis: 'Labour – Active' },
-  { id: 'ADM005', patient: 'Rajesh Varma',    patientId: 'P10062', initials: 'RV', bed: 'ORT-11', ward: 'Orthopedics',    admitDate: '12 Aug', days: 4,  condition: 'Recovering', doctor: 'Dr. Suresh Bhat', diagnosis: 'Post Hip Replacement' },
-  { id: 'ADM006', patient: 'Deepa Thomas',    patientId: 'P10069', initials: 'DT', bed: 'E-07',   ward: 'Emergency',      admitDate: '16 Aug', days: 0,  condition: 'Critical', doctor: 'Dr. Priya Sharma', diagnosis: 'Acute Abdomen' },
-];
+  return {
+    id: `APT10${20 + i}`,
+    time: timeStr,
+    patient: pName,
+    patientId: `P100${18 + i}`,
+    initials,
+    doctor: doctors[i % doctors.length],
+    dept: depts[i % depts.length],
+    status: statuses[i % statuses.length],
+    type: types[i % types.length]
+  };
+});
+
+// ── Active Admissions (IPD - 25 items) ───────────────────────
+export const mockActiveAdmissions = Array.from({ length: 25 }, (_, i) => {
+  const wards = ['General Ward', 'Cardiology', 'Neurology', 'Maternity', 'Orthopedics', 'Emergency', 'ICU'];
+  const doctors = ['Dr. Priya Sharma', 'Dr. Kiran Rao', 'Dr. Ananya Menon', 'Dr. Rekha Singh', 'Dr. Suresh Bhat'];
+  const conditions = ['Stable', 'Serious', 'Stable', 'Stable', 'Recovering', 'Critical'];
+  const diagnoses = ['Hypertension', 'AMI – Post-Stent', 'Migraine – Acute', 'Labour – Active', 'Post Hip Replacement', 'Acute Abdomen', 'Severe Pneumonia'];
+  const pName = PATIENT_NAMES[i % PATIENT_NAMES.length];
+  const initials = pName.split(' ').map(n => n[0]).join('');
+
+  return {
+    id: `ADM${i + 1 < 10 ? '00' + (i + 1) : '0' + (i + 1)}`,
+    patient: pName,
+    patientId: `P100${25 + i}`,
+    initials,
+    bed: `${wards[i % wards.length].slice(0, 3).toUpperCase()}-0${(i % 9) + 1}`,
+    ward: wards[i % wards.length],
+    admitDate: `${10 + (i % 8)} Aug`,
+    days: (i % 5) + 1,
+    condition: conditions[i % conditions.length],
+    doctor: doctors[i % doctors.length],
+    diagnosis: diagnoses[i % diagnoses.length]
+  };
+});
 
 // ── Department Overview ──────────────────────────────────────
 export const mockDepartments = [
-  { name: 'General Medicine', patients: 48, occupancy: 82, beds: 60,  available: 12, onCall: 'Dr. Priya Sharma',  status: 'normal' },
-  { name: 'Cardiology',       patients: 31, occupancy: 75, beds: 40,  available: 10, onCall: 'Dr. Kiran Rao',    status: 'normal' },
-  { name: 'Neurology',        patients: 22, occupancy: 61, beds: 36,  available: 14, onCall: 'Dr. Ananya Menon', status: 'normal' },
-  { name: 'Maternity',        patients: 18, occupancy: 90, beds: 20,  available: 2,  onCall: 'Dr. Rekha Singh',  status: 'warning' },
-  { name: 'Orthopedics',      patients: 27, occupancy: 68, beds: 40,  available: 13, onCall: 'Dr. Suresh Bhat',  status: 'normal' },
-  { name: 'Emergency',        patients: 6,  occupancy: 55, beds: 10,  available: 4,  onCall: 'Dr. Priya Sharma', status: 'normal' },
+  { name: 'General Medicine', patients: 48, occupancy: 82, beds: 60, available: 12, onCall: 'Dr. Priya Sharma', status: 'normal' },
+  { name: 'Cardiology', patients: 31, occupancy: 75, beds: 40, available: 10, onCall: 'Dr. Kiran Rao', status: 'normal' },
+  { name: 'Neurology', patients: 22, occupancy: 61, beds: 36, available: 14, onCall: 'Dr. Ananya Menon', status: 'normal' },
+  { name: 'Maternity', patients: 18, occupancy: 90, beds: 20, available: 2, onCall: 'Dr. Rekha Singh', status: 'warning' },
+  { name: 'Orthopedics', patients: 27, occupancy: 68, beds: 40, available: 13, onCall: 'Dr. Suresh Bhat', status: 'normal' },
+  { name: 'Emergency', patients: 6, occupancy: 55, beds: 10, available: 4, onCall: 'Dr. Priya Sharma', status: 'normal' },
+  { name: 'Paediatrics', patients: 15, occupancy: 50, beds: 30, available: 15, onCall: 'Dr. Vikram Nair', status: 'normal' },
+  { name: 'Dermatology', patients: 12, occupancy: 40, beds: 15, available: 9, onCall: 'Dr. Leena Joseph', status: 'normal' },
+  { name: 'ENT', patients: 14, occupancy: 56, beds: 25, available: 11, onCall: 'Dr. Arun Krishnan', status: 'normal' },
+  { name: 'Ophthalmology', patients: 19, occupancy: 63, beds: 30, available: 11, onCall: 'Dr. Pooja Gupta', status: 'normal' },
+  { name: 'Urology', patients: 16, occupancy: 64, beds: 25, available: 9, onCall: 'Dr. Sanjay Dutt', status: 'normal' },
+  { name: 'Psychiatry', patients: 10, occupancy: 50, beds: 20, available: 10, onCall: 'Dr. Neha Kulkarni', status: 'normal' },
+  { name: 'Pulmonology', patients: 25, occupancy: 83, beds: 30, available: 5, onCall: 'Dr. Alok Verma', status: 'normal' },
+  { name: 'Nephrology', patients: 21, occupancy: 70, beds: 30, available: 9, onCall: 'Dr. Meera Nambiar', status: 'normal' },
+  { name: 'Oncology', patients: 28, occupancy: 93, beds: 30, available: 2, onCall: 'Dr. Siddharth Roy', status: 'warning' }
 ];
 
-// ── Pending Clinical Tasks ───────────────────────────────────
-export const mockPendingTasks = [
-  { id: 'T001', priority: 'critical', text: 'Review CBC results for P10025 – Arun Kumar', module: 'Lab',        time: '10:05 AM', assignee: 'Dr. Priya Sharma' },
-  { id: 'T002', priority: 'high',     text: 'Discharge clearance for P10011 – Kavitha Rao', module: 'IPD',     time: '10:30 AM', assignee: 'Dr. Priya Sharma' },
-  { id: 'T003', priority: 'high',     text: 'Approve pharmacy order ORD3081 – P10041',      module: 'Pharmacy', time: '09:55 AM', assignee: 'Dr. Kiran Rao' },
-  { id: 'T004', priority: 'medium',   text: 'Update surgery notes – P10062 Rajesh Varma',   module: 'Surgery',  time: '11:00 AM', assignee: 'Dr. Suresh Bhat' },
-  { id: 'T005', priority: 'medium',   text: 'Confirm insurance auth – P10033 Sunita Iyer',  module: 'Billing',  time: '12:00 PM', assignee: 'Admin' },
-  { id: 'T006', priority: 'low',      text: 'Consent form pending – APT1026 Ravi Shankar',  module: 'OPD',      time: '14:00 PM', assignee: 'Reception' },
-];
+// ── Pending Clinical Tasks (25 items) ─────────────────────────
+export const mockPendingTasks = Array.from({ length: 25 }, (_, i) => {
+  const priorities = ['critical', 'high', 'high', 'medium', 'medium', 'low'];
+  const modules = ['Lab', 'IPD', 'Pharmacy', 'Surgery', 'Billing', 'OPD', 'Nursing'];
+  const assignees = ['Dr. Priya Sharma', 'Dr. Kiran Rao', 'Dr. Suresh Bhat', 'Admin', 'Reception', 'Nurse Mary'];
+  const pName = PATIENT_NAMES[i % PATIENT_NAMES.length];
 
-// ── Pending Lab Orders ───────────────────────────────────────
-export const mockPendingLabOrders = [
-  { id: 'LAB2039', test: 'CBC Panel',      patient: 'Arun Kumar',   patientId: 'P10025', ordered: '09:15 AM', status: 'Ready',      urgency: 'routine' },
-  { id: 'LAB2040', test: 'Lipid Profile',  patient: 'Sunita Iyer',  patientId: 'P10033', ordered: '08:50 AM', status: 'Processing', urgency: 'stat' },
-  { id: 'LAB2041', test: 'Troponin I',     patient: 'Sunita Iyer',  patientId: 'P10033', ordered: '08:52 AM', status: 'Processing', urgency: 'stat' },
-  { id: 'LAB2042', test: 'Urine Culture',  patient: 'Meena Devi',   patientId: 'P10041', ordered: '10:00 AM', status: 'Pending',    urgency: 'routine' },
-  { id: 'LAB2043', test: 'CT Brain',       patient: 'Prakash Nair', patientId: 'P10047', ordered: '09:45 AM', status: 'Pending',    urgency: 'urgent' },
-];
+  return {
+    id: `T0${i + 1 < 10 ? '0' + (i + 1) : i + 1}`,
+    priority: priorities[i % priorities.length],
+    text: `Task #${i + 1}: Clinical review for P100${25 + i} – ${pName}`,
+    module: modules[i % modules.length],
+    time: `${08 + (i % 9)}:${(i * 5) % 60 < 10 ? '0' + ((i * 5) % 60) : (i * 5) % 60} AM`,
+    assignee: assignees[i % assignees.length]
+  };
+});
 
-// ── Critical Alerts ──────────────────────────────────────────
-export const mockCriticalAlerts = [
-  { id: 'ALT001', type: 'critical', text: 'ICU Bed E-07 — Patient Deepa Thomas: BP 80/50, requires immediate attention', time: '10:31 AM' },
-  { id: 'ALT002', type: 'warning',  text: 'Maternity Ward 90% full — only 2 beds remaining', time: '10:15 AM' },
-  { id: 'ALT003', type: 'info',     text: 'Code Blue drill scheduled at 14:00 — all staff to comply', time: '09:00 AM' },
-];
+// ── Pending Lab Orders (25 items) ────────────────────────────
+export const mockPendingLabOrders = Array.from({ length: 25 }, (_, i) => {
+  const tests = ['CBC Panel', 'Lipid Profile', 'Troponin I', 'Urine Culture', 'CT Brain', 'Liver Function', 'Thyroid Profile', 'HbA1c', 'D-Dimer'];
+  const statuses = ['Ready', 'Processing', 'Processing', 'Pending', 'Pending'];
+  const urgencies = ['routine', 'stat', 'stat', 'routine', 'urgent'];
+  const pName = PATIENT_NAMES[i % PATIENT_NAMES.length];
 
-// ── Recent Activity Feed ─────────────────────────────────────
-export const mockActivities = [
-  { id: 'A001', type: 'admission',   text: 'P10025 Arun Kumar admitted to General Ward (Bed GW-04)',          time: '10:22 AM', user: 'Reception' },
-  { id: 'A002', type: 'lab',         text: 'Lab result LAB2039 (CBC Panel) ready — awaiting Dr. Sharma',      time: '09:58 AM', user: 'Lab Dept' },
-  { id: 'A003', type: 'discharge',   text: 'P10011 Kavitha Rao discharged from Ward 2A — clearance issued',   time: '09:30 AM', user: 'Dr. Priya Sharma' },
-  { id: 'A004', type: 'pharmacy',    text: 'Prescription ORD3078 dispensed for P10052 Mohammed Aslam',        time: '09:14 AM', user: 'Pharmacy' },
-  { id: 'A005', type: 'appointment', text: 'APT1019 — Dr. Kiran Rao consultation completed with P10031',      time: '08:47 AM', user: 'Dr. Kiran Rao' },
-  { id: 'A006', type: 'emergency',   text: 'P10069 Deepa Thomas registered as Emergency — Bed E-07 assigned', time: '08:30 AM', user: 'Emergency Dept' },
-  { id: 'A007', type: 'lab',         text: 'Radiology report RD-0091 finalized for P10047 Prakash Nair',      time: '08:10 AM', user: 'Radiology' },
-];
+  return {
+    id: `LAB20${39 + i}`,
+    test: tests[i % tests.length],
+    patient: pName,
+    patientId: `P100${25 + i}`,
+    ordered: `0${8 + (i % 4)}:${(i * 12) % 60 < 10 ? '0' + ((i * 12) % 60) : (i * 12) % 60} AM`,
+    status: statuses[i % statuses.length],
+    urgency: urgencies[i % urgencies.length]
+  };
+});
+
+// ── Critical Alerts (15 items) ──────────────────────────────
+export const mockCriticalAlerts = Array.from({ length: 15 }, (_, i) => {
+  const types = ['critical', 'warning', 'info'];
+  const texts = [
+    `ICU Bed E-0${(i % 9) + 1} — Patient ${PATIENT_NAMES[i % PATIENT_NAMES.length]}: BP 80/50, requires immediate attention`,
+    `Ward ${i + 1}A at 90% capacity — limited bed availability`,
+    `Code Blue emergency drill scheduled for today at ${14 + (i % 3)}:00`,
+    `Pharmacy stock low for Injection Ondansetron & Ceftriaxone`,
+    `Lab report pending urgent verification for P100${25 + i}`
+  ];
+  return {
+    id: `ALT0${i + 1 < 10 ? '0' + (i + 1) : i + 1}`,
+    type: types[i % types.length],
+    text: texts[i % texts.length],
+    time: `${10 + (i % 3)}:${(i * 7) % 60 < 10 ? '0' + ((i * 7) % 60) : (i * 7) % 60} AM`
+  };
+});
+
+// ── Recent Activity Feed (25 items) ──────────────────────────
+export const mockActivities = Array.from({ length: 25 }, (_, i) => {
+  const types = ['admission', 'lab', 'discharge', 'pharmacy', 'appointment', 'emergency', 'radiology'];
+  const users = ['Reception', 'Lab Dept', 'Dr. Priya Sharma', 'Pharmacy', 'Dr. Kiran Rao', 'Emergency Dept', 'Radiology'];
+  const pName = PATIENT_NAMES[i % PATIENT_NAMES.length];
+
+  return {
+    id: `A0${i + 1 < 10 ? '0' + (i + 1) : i + 1}`,
+    type: types[i % types.length],
+    text: `Activity #${i + 1}: Record update completed for P100${25 + i} (${pName})`,
+    time: `${08 + (i % 5)}:${(i * 4) % 60 < 10 ? '0' + ((i * 4) % 60) : (i * 4) % 60} AM`,
+    user: users[i % users.length]
+  };
+});
 
 // ── Hospital Shift Info ──────────────────────────────────────
 export const mockShiftInfo = {
@@ -202,11 +278,11 @@ export const mockShiftInfo = {
   shiftStart: '08:00',
   shiftEnd: '16:00',
   census: {
-    totalInpatients: 112,
-    admittedToday: 6,
-    dischargedToday: 3,
-    scheduledDischarges: 5,
-    pendingAdmissions: 4,
-    occupancyPct: 62,
+    totalInpatients: 184,
+    admittedToday: 18,
+    dischargedToday: 12,
+    scheduledDischarges: 15,
+    pendingAdmissions: 14,
+    occupancyPct: 78,
   },
 };

@@ -10,13 +10,877 @@ const today = new Date().toISOString().split('T')[0];
 export const PRESCRIPTION_STATUSES = ['Pending', 'Partially Dispensed', 'Dispensed', 'Cancelled'];
 
 const SEED_PRESCRIPTIONS = [
-  { id: 'RX-2026-001', prescriptionId: 'RX-2026-001', patientId: 'P10025', patientName: 'Arun Kumar', doctorId: 'D001', doctorName: 'Dr. Priya Sharma', prescribedDate: today, status: 'Pending', medicines: [{ name: 'Telmisartan 40mg', dosage: '40mg', frequency: 'Once daily', duration: '30 days', quantity: 30, dispensed: 0 }, { name: 'Amlodipine 5mg', dosage: '5mg', frequency: 'Once daily', duration: '30 days', quantity: 30, dispensed: 0 }], notes: 'Hypertension management' },
-  { id: 'RX-2026-002', prescriptionId: 'RX-2026-002', patientId: 'P10052', patientName: 'Mohammed Aslam', doctorId: 'D001', doctorName: 'Dr. Priya Sharma', prescribedDate: today, status: 'Dispensed', medicines: [{ name: 'Salbutamol Inhaler', dosage: '100mcg', frequency: 'SOS', duration: '1 month', quantity: 1, dispensed: 1 }, { name: 'Budesonide Inhaler', dosage: '200mcg', frequency: 'Twice daily', duration: '1 month', quantity: 1, dispensed: 1 }], notes: 'Asthma management', dispensedAt: today, dispensedBy: 'Pharmacy Team' },
-  { id: 'RX-2026-003', prescriptionId: 'RX-2026-003', patientId: 'P10041', patientName: 'Meena Devi', doctorId: 'D004', doctorName: 'Dr. Rekha Singh', prescribedDate: today, status: 'Pending', medicines: [{ name: 'Folic Acid 5mg', dosage: '5mg', frequency: 'Once daily', duration: '90 days', quantity: 90, dispensed: 0 }, { name: 'Iron Sucrose 200mg', dosage: '200mg', frequency: 'IV weekly', duration: '4 weeks', quantity: 4, dispensed: 0 }], notes: 'Prenatal supplementation' },
-  { id: 'RX-2026-004', prescriptionId: 'RX-2026-004', patientId: 'P10047', patientName: 'Prakash Nair', doctorId: 'D003', doctorName: 'Dr. Ananya Menon', prescribedDate: today, status: 'Partially Dispensed', medicines: [{ name: 'Sumatriptan 50mg', dosage: '50mg', frequency: 'SOS (max 2/day)', duration: '1 month', quantity: 6, dispensed: 3 }, { name: 'Metoclopramide 10mg', dosage: '10mg', frequency: 'SOS', duration: '1 month', quantity: 10, dispensed: 5 }], notes: 'Migraine management' },
+  {
+    "id": "RX-2026-101",
+    "prescriptionId": "RX-2026-101",
+    "patientId": "P10025",
+    "patientName": "Arun Kumar",
+    "doctorId": "D01",
+    "doctorName": "Dr. Priya Sharma",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Essential Hypertension",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-102",
+    "prescriptionId": "RX-2026-102",
+    "patientId": "P10041",
+    "patientName": "Meena Devi",
+    "doctorId": "D02",
+    "doctorName": "Dr. Rekha Singh",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Gestational Diabetes",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-103",
+    "prescriptionId": "RX-2026-103",
+    "patientId": "P10067",
+    "patientName": "Rajesh Nair",
+    "doctorId": "D03",
+    "doctorName": "Dr. Kiran Rao",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for AMI – Post-Stent",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-104",
+    "prescriptionId": "RX-2026-104",
+    "patientId": "P10033",
+    "patientName": "Sunita Iyer",
+    "doctorId": "D04",
+    "doctorName": "Dr. Kiran Rao",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Coronary Artery Disease",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-105",
+    "prescriptionId": "RX-2026-105",
+    "patientId": "P10047",
+    "patientName": "Prakash Nair",
+    "doctorId": "D05",
+    "doctorName": "Dr. Ananya Menon",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Chronic Migraine",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-106",
+    "prescriptionId": "RX-2026-106",
+    "patientId": "P10055",
+    "patientName": "Fatima Begum",
+    "doctorId": "D01",
+    "doctorName": "Dr. Rekha Singh",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Labour – Active",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-107",
+    "prescriptionId": "RX-2026-107",
+    "patientId": "P10062",
+    "patientName": "Rajesh Varma",
+    "doctorId": "D02",
+    "doctorName": "Dr. Suresh Bhat",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Post Hip Replacement",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-108",
+    "prescriptionId": "RX-2026-108",
+    "patientId": "P10069",
+    "patientName": "Deepa Thomas",
+    "doctorId": "D03",
+    "doctorName": "Dr. Rahul Mehta",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Acute Appendicitis",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-109",
+    "prescriptionId": "RX-2026-109",
+    "patientId": "P10011",
+    "patientName": "Kavitha Rao",
+    "doctorId": "D04",
+    "doctorName": "Dr. Priya Sharma",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Hypothyroidism",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-110",
+    "prescriptionId": "RX-2026-110",
+    "patientId": "P10052",
+    "patientName": "Mohammed Aslam",
+    "doctorId": "D05",
+    "doctorName": "Dr. Priya Sharma",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Bronchial Asthma",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-111",
+    "prescriptionId": "RX-2026-111",
+    "patientId": "P10018",
+    "patientName": "Karthik Suresh",
+    "doctorId": "D01",
+    "doctorName": "Dr. Ananya Menon",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Seizure Disorder",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-112",
+    "prescriptionId": "RX-2026-112",
+    "patientId": "P10031",
+    "patientName": "Lalitha Iyer",
+    "doctorId": "D02",
+    "doctorName": "Dr. Kiran Rao",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Hypertensive Heart Disease",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-113",
+    "prescriptionId": "RX-2026-113",
+    "patientId": "P10060",
+    "patientName": "Sunita Pillai",
+    "doctorId": "D03",
+    "doctorName": "Dr. Ananya Menon",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Cervical Spondylosis",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-114",
+    "prescriptionId": "RX-2026-114",
+    "patientId": "P10071",
+    "patientName": "Ravi Shankar",
+    "doctorId": "D04",
+    "doctorName": "Dr. Kiran Rao",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Angina Pectoris",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-115",
+    "prescriptionId": "RX-2026-115",
+    "patientId": "P10075",
+    "patientName": "Anil Deshmukh",
+    "doctorId": "D05",
+    "doctorName": "Dr. Priya Sharma",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Type 2 Diabetes Mellitus",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-116",
+    "prescriptionId": "RX-2026-116",
+    "patientId": "P10080",
+    "patientName": "Pooja Hegde",
+    "doctorId": "D01",
+    "doctorName": "Dr. Leena Joseph",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Psoriasis Vulgaris",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-117",
+    "prescriptionId": "RX-2026-117",
+    "patientId": "P10085",
+    "patientName": "Suresh Menon",
+    "doctorId": "D02",
+    "doctorName": "Dr. Suresh Bhat",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Osteoarthritis Knee",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-118",
+    "prescriptionId": "RX-2026-118",
+    "patientId": "P10089",
+    "patientName": "Lakshmi Pillai",
+    "doctorId": "D03",
+    "doctorName": "Dr. Vikram Nair",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Acute Tonsillitis",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-119",
+    "prescriptionId": "RX-2026-119",
+    "patientId": "P10092",
+    "patientName": "Vikramaditya Roy",
+    "doctorId": "D04",
+    "doctorName": "Dr. Sanjay Dutt",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for BPH – Benign Prostatic Hyperplasia",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-120",
+    "prescriptionId": "RX-2026-120",
+    "patientId": "P10098",
+    "patientName": "Geetha Krishnan",
+    "doctorId": "D05",
+    "doctorName": "Dr. Alok Verma",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for COPD Exacerbation",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-121",
+    "prescriptionId": "RX-2026-121",
+    "patientId": "P10102",
+    "patientName": "Vikram Malhotra",
+    "doctorId": "D01",
+    "doctorName": "Dr. Suresh Bhat",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Right Femur Fracture",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-122",
+    "prescriptionId": "RX-2026-122",
+    "patientId": "P10108",
+    "patientName": "Sangeetha Reddi",
+    "doctorId": "D02",
+    "doctorName": "Dr. Rakesh Jhunjhun",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Chronic Gastritis",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-123",
+    "prescriptionId": "RX-2026-123",
+    "patientId": "P10115",
+    "patientName": "Ananya Roy",
+    "doctorId": "D03",
+    "doctorName": "Dr. Priya Sharma",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Type 1 Diabetes",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-124",
+    "prescriptionId": "RX-2026-124",
+    "patientId": "P10120",
+    "patientName": "Harish Chandra",
+    "doctorId": "D04",
+    "doctorName": "Dr. Meera Nambiar",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Chronic Kidney Disease",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-125",
+    "prescriptionId": "RX-2026-125",
+    "patientId": "P10128",
+    "patientName": "Suresh Gupta",
+    "doctorId": "D05",
+    "doctorName": "Dr. Alok Verma",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Severe Bronchospasm",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-126",
+    "prescriptionId": "RX-2026-126",
+    "patientId": "P10135",
+    "patientName": "Divya Mukhopadhyay",
+    "doctorId": "D01",
+    "doctorName": "Dr. Shalini Das",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Hyperthyroidism",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-127",
+    "prescriptionId": "RX-2026-127",
+    "patientId": "P10140",
+    "patientName": "Amitabh Saxena",
+    "doctorId": "D02",
+    "doctorName": "Dr. Siddharth Roy",
+    "prescribedDate": "2026-09-18",
+    "status": "Dispensed",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 30
+      }
+    ],
+    "notes": "Rx for Chemotherapy Protocol",
+    "dispensedAt": "2026-09-18",
+    "dispensedBy": "Pharmacy Main Team"
+  },
+  {
+    "id": "RX-2026-128",
+    "prescriptionId": "RX-2026-128",
+    "patientId": "P10145",
+    "patientName": "Rohit Shetty",
+    "doctorId": "D03",
+    "doctorName": "Dr. Arun Krishnan",
+    "prescribedDate": "2026-09-18",
+    "status": "Pending",
+    "medicines": [
+      {
+        "name": "Telmisartan 40mg",
+        "dosage": "40mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      },
+      {
+        "name": "Amlodipine 5mg",
+        "dosage": "5mg",
+        "frequency": "Once daily",
+        "duration": "30 days",
+        "quantity": 30,
+        "dispensed": 0
+      }
+    ],
+    "notes": "Rx for Chronic Sinusitis",
+    "dispensedAt": null,
+    "dispensedBy": "Pharmacy Main Team"
+  }
 ];
 
-const getLocal = (key, seed) => { try { const d = localStorage.getItem(key); if (d) return JSON.parse(d); } catch { /* */ } localStorage.setItem(key, JSON.stringify(seed)); return seed; };
+const getLocal = (key, seed) => { try { const d = localStorage.getItem(key); if (d) { const parsed = JSON.parse(d); if (Array.isArray(parsed) && parsed.length >= 20) return parsed; } } catch { /* */ } localStorage.setItem(key, JSON.stringify(seed)); return seed; };
 const saveLocal = (key, data) => { try { localStorage.setItem(key, JSON.stringify(data)); } catch { /* */ } };
 const h = () => ({ 'Content-Type': 'application/json', ...(token() ? { Authorization: `Bearer ${token()}` } : {}) });
 
